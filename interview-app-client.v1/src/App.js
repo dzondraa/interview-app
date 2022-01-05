@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import Login from "./components/Login";
+import useToken from "./hooks/useToken";
 
-function App() {
+function App(props) {
+  const tokenService = useToken();
+  
+  if (!tokenService.getToken()) {
+    console.log(tokenService.getToken());
+    return <Login setToken={tokenService.setToken} />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="container-fluid">
+        <Router>
+          <Routes>
+            <Route path="/welcome" element={<Login />} />
+          </Routes>
+        </Router>
+        <Router>
+          <Routes>
+            <Route
+              path="/login"
+              setToken={tokenService.setToken}
+              element={<Login />}
+            />
+          </Routes>
+        </Router>
+      </div>
+    </>
   );
 }
 

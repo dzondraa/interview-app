@@ -2,12 +2,12 @@ module.exports = {
     version:'v1',
     protocol:'http',
     host:'localhost',
-    port:1234,
+    port:1337,
     website:'https://igniteevents.co',
     // if there is no admin account on the system, create this one
     noadmin:{
-      login:'admin@admin.com',
-      password: 'admin',
+      login:'admin@ignite.co',
+      password: 'ConfusedBirch|3',
       dateOfBirth:'1970-01-01',
       roles:['admin']
     },

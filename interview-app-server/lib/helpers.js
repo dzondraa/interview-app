@@ -30,7 +30,6 @@ function validateUser (context, userId) {
   // Parse HTTP Basic Access Authentication. TODO: replace with JWT
   // const [ userId, password ] = atob(authorization.split(' ')[1]).split(':')
 
-
   if (!userId || !password) {
     if (!meta.headers) meta.headers = {}
     meta.headers['WWW-Authenticate'] = 'Basic realm="App name"'

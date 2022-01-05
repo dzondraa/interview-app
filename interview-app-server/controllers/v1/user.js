@@ -125,7 +125,7 @@ class UserController extends Controller {
   }
 
   async "GET /user/{id}"(req, res, ses){
-    this.meShorthand(req, res, ses)
+    return this.meShorthand(req, res, ses)
   }
 
   meShorthand(req, res, ses){
