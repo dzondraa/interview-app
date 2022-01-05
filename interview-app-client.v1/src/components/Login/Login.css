@@ -1,0 +1,12 @@
+.form-container {
+    width: 500px;
+    margin: 100px auto;
+}
+
+.form-container button {
+    width: 100%;
+}
+
+#errors {
+    margin-top: 10px;
+}
