@@ -1,0 +1,91 @@
+
+.head-right-link{
+  color: #dd8c5d;
+  opacity:1 !important;
+  font-weight: bold;
+}
+
+.endpoint-editor .array-item {
+
+}
+
+.endpoint-editor .form-group {
+  padding-top:7px;
+}
+
+.endpoint-editor .row>div{
+  display:table;
+}
+
+.endpoint-editor .checkbox input {
+  text-align:right;
+  width:30px;
+}
+
+#root__title {
+  font-size:21px;
+}
+.endpoint-editor .control-label {
+  font-size:14px;
+}
+
+.endpoint-editor  .field-description {
+  font-size:13px;
+}
+
+.endpoint-editor .row>div:last-of-type{
+  text-align: left;
+}
+.endpoint-editor label{
+  text-align: right;
+}
+
+
+.glyphicon-plus::after{
+  content: '✚';
+  width:40px;
+  height:40px;
+  font-size: 30px;
+  font-weight:bold;
+  font-style: normal;
+  color:#aa4444;
+}
+
+.glyphicon-remove::after{
+  content: '✖';
+  width:40px;
+  height:40px;
+  font-size: 30px;
+  font-weight:bold;
+  font-style: normal;
+  color:#aa4444;
+}
+
+.glyphicon-arrow-up::after{
+  content: '⬆';
+  width:40px;
+  height:40px;
+  font-size: 30px;
+  font-weight:bold;
+  font-style: normal;
+  color:#aa4444;
+}
+.glyphicon-arrow-down::after{
+  content: '⬇';
+  width:40px;
+  height:40px;
+  font-size: 30px;
+  font-weight:bold;
+  font-style: normal;
+  color:#aa4444;
+}
+
+.endpoint-editor input,select{
+  border:1px solid lightgray;
+  width:90%;
+  padding:2px;
+}
+
+.schema-editor-builtin-submit{
+  display:none
+}
