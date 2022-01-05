@@ -1,43 +1,11 @@
-import React, { useState, useEffect } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import validator from "validator";
+import useLogin from "../../hooks/useLogin";
 
 import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState("");
+  var { errors, handleSubmit, setEmail, setPassword } = useLogin();
 
-  const handleSubmit = () => {
-    const errorsList = validateFormData();
-    const errorsToDisplay = buildErrorList(errorsList);
-    setErrors((e) => (e = errorsToDisplay));
-  };
-
-  const buildErrorList = (errorsList) => {
-    const errs = errorsList.map((value, key) => {
-      return <li key={key}>{value}</li>;
-    });
-
-    return errorsList.length ? (
-      <Alert id="errors" variant="danger">
-        {errs}
-      </Alert>
-    ) : null;
-  };
-  // returns errors array
-  const validateFormData = () => {
-    var errors = [];
-    !validator.isEmail(email) && errors.push("Not a valid email");
-    !validator.isStrongPassword(password) &&
-      errors.push("Please enter a strong password");
-    return errors;
-  };
-
-  useEffect(() => {
-    // console.log(email);
-  }, [email]);
   return (
     <div className="form-container">
       <Form>
@@ -59,7 +27,7 @@ const Login = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             onChange={(e) => {
-              setPassword((password) => (password = e.target.value));
+              setPassword((p) => (p = e.target.value));
             }}
             type="password"
             placeholder="Password"
