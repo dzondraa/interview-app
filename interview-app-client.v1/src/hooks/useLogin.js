@@ -1,6 +1,7 @@
 import { useState } from "react";
 import validator from "validator";
 import { Alert } from "react-bootstrap";
+import Api from '../services/Service'
 
 export default function useToken() {
 
@@ -8,12 +9,13 @@ export default function useToken() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
-
+  const api = new Api()
 
   const handleSubmit = () => {
     const errorsList = validateFormData();
     const errorsToDisplay = buildErrorList(errorsList);
-    setErrors((e) => (e = errorsToDisplay));
+    setErrors((e) => (e = errorsToDisplay)) 
+    errorsList.length == 0 && api.get("asd")
   };
 
 
