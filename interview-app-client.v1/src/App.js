@@ -1,7 +1,7 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Login from "./components/Login/Login";
+import Questions from "./components/Questions/Questions";
 import useToken from "./hooks/useToken";
-
 
 function App(props) {
   const tokenService = useToken();
@@ -25,6 +25,10 @@ function App(props) {
               path="/login"
               setToken={tokenService.setToken}
               element={<Login />}
+            />
+            <Route
+              path="/questions"
+              element={<Questions />}
             />
           </Routes>
         </Router>
