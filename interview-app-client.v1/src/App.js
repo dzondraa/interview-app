@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
-import Questions from "./components/Questions/Questions";
+import Questions from "./pages/Questions/Questions";
 import useToken from "./hooks/useToken";
 
 function App(props) {
