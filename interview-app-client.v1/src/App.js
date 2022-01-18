@@ -1,5 +1,5 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import Login from "./components/Login/Login";
+import LoginPage from "./pages/login/LoginPage";
 import Questions from "./components/Questions/Questions";
 import useToken from "./hooks/useToken";
 
@@ -8,7 +8,7 @@ function App(props) {
 
   if (!tokenService.getToken()) {
     console.log(tokenService.getToken());
-    return <Login setToken={tokenService.setToken} />;
+    return <LoginPage setToken={tokenService.setToken} />;
   }
 
   return (
@@ -16,7 +16,7 @@ function App(props) {
       <div className="container-fluid">
         <Router>
           <Routes>
-            <Route path="/welcome" element={<Login />} />
+            <Route path="/welcome" element={<LoginPage />} />
           </Routes>
         </Router>
         <Router>
@@ -24,7 +24,7 @@ function App(props) {
             <Route
               path="/login"
               setToken={tokenService.setToken}
-              element={<Login />}
+              element={<LoginPage />}
             />
             <Route
               path="/questions"

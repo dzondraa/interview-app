@@ -4,7 +4,7 @@ import useLogin from "../../hooks/useLogin";
 import "./Login.css";
 
 const Login = () => {
-  var { errors, handleSubmit, setEmail, setPassword } = useLogin();
+  const { errors, handleSubmit, setEmail, setPassword } = useLogin();
 
   return (
     <div className="form-container">
@@ -17,6 +17,7 @@ const Login = () => {
             }}
             type="text"
             placeholder="Enter email"
+            className="form-control-user"
           />
           <Form.Text className="text-muted">
             {/* We'll never share your email with anyone else. */}
@@ -37,10 +38,11 @@ const Login = () => {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group> */}
         <Button onClick={handleSubmit} variant="primary">
-          Submit
+          <b>Log in</b>
         </Button>
-        {errors}
       </Form>
+      {errors}
+
     </div>
   );
 };

@@ -26,9 +26,12 @@ export default function useLogin() {
     if (error) setErrors(buildErrorList([error]));
     if (token) {
       setToken(token);
+      // TODO -> avoid full reaload
       window.location.reload();
     }
   };
+
+  // should be in Login.js
   const buildErrorList = (errorsList) => {
     const errs = errorsList.map((value, key) => {
       return <li key={key}>{value}</li>;
