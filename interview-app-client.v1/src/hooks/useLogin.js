@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import validator from "validator";
 import { Alert } from "react-bootstrap";
 import Api from "../services/Service";
@@ -9,7 +9,12 @@ export default function useLogin() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const api = new Api();
-  const { setToken } = useToken();
+  const { token, setToken } = useToken();
+
+  useEffect(() => {
+    if(token) redirect()
+    
+  });
 
   const handleSubmit = async () => {
     const errorsList = validateFormData();
@@ -27,7 +32,7 @@ export default function useLogin() {
     if (token) {
       setToken(token);
       // TODO -> avoid full reaload
-      window.location.reload();
+      redirect();
     }
   };
 
@@ -38,6 +43,7 @@ export default function useLogin() {
     });
 
     return errorsList.length ? (
+      // should not be here (no UI elements)
       <Alert id="errors" variant="danger">
         {errs}
       </Alert>
@@ -50,6 +56,10 @@ export default function useLogin() {
     !validator.isEmail(email) && errors.push("Not a valid email");
     // !validator.isStrongPassword(password) && errors.push("Please enter a strong password");
     return errors;
+  };
+
+  const redirect = () => {
+    window.location.href = "questions";
   };
 
   return {
