@@ -10,8 +10,8 @@ const Questions = () => {
   const api = new Api();
 
   useEffect(() => {
-    api.get("documents").then((res) => console.log(res));
-  });
+    api.get("documents").then((res) => setDocuments(res));
+  }, []);
 
   return (
     <div className="container-fluid questions-main">
@@ -26,7 +26,7 @@ const Questions = () => {
           >
             Reviewed CV Documents
           </h1>
-          {documents ? <DynamicTable prop={documents}></DynamicTable> : <LoaderSpin></LoaderSpin>}
+          {documents ? <DynamicTable props={documents}></DynamicTable> : <LoaderSpin></LoaderSpin>}
         </div>
       </div>
     </div>

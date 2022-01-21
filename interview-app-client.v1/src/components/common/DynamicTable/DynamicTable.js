@@ -14,12 +14,12 @@ const DynamicTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        {schema.properties.map((prop, index) => {
+        {props.props.map((prop, index) => {
           return (
             <tr key={index}>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
+              <th scope="row">{index}</th>
+              <td>{prop}</td>
+              <td>10</td>
             </tr>
           );
         })}
