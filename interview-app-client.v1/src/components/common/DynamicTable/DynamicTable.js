@@ -1,10 +1,14 @@
 const DynamicTable = (props) => {
   const schema = {
-    properties: ["File name", "Relevancy scale"],
+    properties: ["File name", "Matches", "Relevancy scale"],
   };
 
   function nameFromPath(path) {
     return path.split("\\").pop();
+  }
+
+  function extractRelevancy(path) {
+      return path.split("|").pop().trim()
   }
   return (
     <div
@@ -36,6 +40,9 @@ const DynamicTable = (props) => {
                 <th scope="row">{index}</th>
                 <td>
                   <p>{nameFromPath(prop)}</p>
+                </td>
+                <td>
+                  <p>{extractRelevancy(prop)}</p>
                 </td>
                 <td><progress id="file" value={Math.floor(Math.random() * 11)} max="10"> 32% </progress></td>
               </tr>
