@@ -1,4 +1,3 @@
-
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -16,7 +15,7 @@ const Sidebar = () => {
             <i class="fas fa-laugh-wink"></i>
           </div>
           <div class="sidebar-brand-text mx-3">
-            SB Admin <sup>2</sup>
+            <sup>2</sup>
           </div>
         </a>
 
