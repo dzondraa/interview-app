@@ -21,7 +21,8 @@ const Questions = () => {
           <h1
             style={{
               marginTop: "15px",
-              textAlign: "center"
+              textAlign: "center",
+              marginBottom: '25px'
             }}
           >
             Reviewed CV Documents
