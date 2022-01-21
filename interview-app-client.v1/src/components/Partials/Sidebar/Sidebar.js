@@ -34,15 +34,13 @@ const Sidebar = () => {
 
         {navigation.map((navigationElement, index) => {
           return (
-            <>
-              <li className="nav-item active">
-                <a className="nav-link" href="index.html">
-                  <i className="fas fa-fw fa-tachometer-alt"></i>
-                  <span>{navigationElement.name}</span>
-                </a>
-              </li>
+            <li key={index} className="nav-item active">
+              <a className="nav-link" href="index.html">
+                <i className="fas fa-fw fa-tachometer-alt"></i>
+                <span>{navigationElement.name}</span>
+              </a>
               <hr className="sidebar-divider my-0"></hr>
-            </>
+            </li>
           );
         })}
       </ul>
