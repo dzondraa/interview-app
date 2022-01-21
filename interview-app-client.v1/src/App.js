@@ -1,6 +1,7 @@
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import Questions from "./pages/Questions/Questions";
+import ReviewedCVs from "./pages/ReviewedCVs/ReviewedCVs";
 import useToken from "./hooks/useToken";
 
 function App(props) {
@@ -29,6 +30,10 @@ function App(props) {
             <Route
               path="/questions"
               element={<Questions />}
+            />
+            <Route
+              path="/reviewed"
+              element={<ReviewedCVs />}
             />
           </Routes>
         </Router>
