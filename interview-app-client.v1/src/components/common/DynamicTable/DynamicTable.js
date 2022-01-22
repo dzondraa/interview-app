@@ -39,10 +39,10 @@ const DynamicTable = (props) => {
               <tr key={index}>
                 <th scope="row">{index}</th>
                 <td>
-                  <p>{nameFromPath(prop)}</p>
+                  <p>{prop.path}</p>
                 </td>
                 <td>
-                  <p>{extractRelevancy(prop)}</p>
+                  <p>{prop.relevancy}</p>
                 </td>
                 <td><progress id="file" value={Math.floor(Math.random() * 11)} max="10"> 32% </progress></td>
               </tr>
