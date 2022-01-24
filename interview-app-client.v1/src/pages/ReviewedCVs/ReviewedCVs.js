@@ -10,7 +10,10 @@ const Questions = () => {
   const api = new Api();
 
   useEffect(() => {
-    api.get("documents").then((res) => setDocuments(res));
+    api.get("documents?path=C:\\Users\\v-dnikolic\\Desktop\\Private\\ReviewedCVs&targetMatch=8&keyword=Java", ).then((res) =>{
+    console.log(res);
+    setDocuments(res)
+  })
   }, []);
 
   return (
