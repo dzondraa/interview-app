@@ -1,4 +1,9 @@
-import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  Navigate,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import Questions from "./pages/Questions/Questions";
 import ReviewedCVs from "./pages/ReviewedCVs/ReviewedCVs";
@@ -8,7 +13,6 @@ function App(props) {
   const tokenService = useToken();
 
   if (!tokenService.getToken()) {
-    console.log(tokenService.getToken());
     return <LoginPage setToken={tokenService.setToken} />;
   }
 
@@ -17,24 +21,18 @@ function App(props) {
       <div className="container-fluid">
         <Router>
           <Routes>
-            <Route path="/welcome" element={<LoginPage />} />
-          </Routes>
-        </Router>
-        <Router>
-          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Questions />}
+            />
             <Route
               path="/login"
               setToken={tokenService.setToken}
               element={<LoginPage />}
             />
-            <Route
-              path="/questions"
-              element={<Questions />}
-            />
-            <Route
-              path="/reviewed"
-              element={<ReviewedCVs />}
-            />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/reviewed" element={<ReviewedCVs />} />
           </Routes>
         </Router>
       </div>
