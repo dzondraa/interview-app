@@ -14,17 +14,27 @@ function joinURL(baseUrl, uri) {
     return `${baseUrl}/${uri}`
 }
 
-class Api {
+/**
+ * ApiFactory is a class which is used to build instance for consuming multiple services
+ * Depending on client needs. 
+ */
+class ApiFactory {
     constructor(apiUrl) {
         this.domain = apiUrl
     }
 
+    /**
+     * Creates instance for using resources service api 
+     */
     static getResourceApiInstance(params) {
-        return new Api(config.RESOURCES)
+        return new ApiFactory(config.RESOURCES)
     }
     
+    /**
+     * Creates instance for using authentication service 
+     */
     static getAuthServiceInstance(params) {
-        return new Api(config.AUTH_SERVICE)
+        return new ApiFactory(config.AUTH_SERVICE)
     }
 
     request(url, method="POST", data=null) {
@@ -58,4 +68,4 @@ class Api {
     }
 }
 
-export default Api;
+export default ApiFactory;

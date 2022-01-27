@@ -7,7 +7,7 @@ import "./ReviewedCVs.css";
 
 const Questions = () => {
   const [documents, setDocuments] = useState(null);
-  const api = new Api();
+  const api = Api.getResourceApiInstance()
 
   useEffect(() => {
     api.get("documents?path=C:\\Users\\v-dnikolic\\Desktop\\Private\\ReviewedCVs&targetMatch=8&keyword=Java", ).then((res) =>{

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import validator from "validator";
 import { Alert } from "react-bootstrap";
-import Api from "../services/Service";
+import ApiFactory from "../services/Service";
 import useToken from "../hooks/useToken";
 
 export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
-  const api = Api.getAuthServiceInstance();
+  const api = ApiFactory.getAuthServiceInstance();
   const { token, setToken } = useToken();
 
   useEffect(() => {
