@@ -26,7 +26,6 @@ export default function useLogin() {
 
   const handleLogin = async () => {
     const response = await api.post("login", { email, password });
-    console.log(response);
     const { error, token } = response;
     if (error) setErrors(buildErrorList([error]));
     if (token) {
