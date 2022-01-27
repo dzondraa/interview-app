@@ -32,7 +32,6 @@ const DynamicTable = (props) => {
               <tr key={index}>
                 <th scope="row">{index}</th>
                 { schema.properties.map((propertyName, propertyIndex) => {
-                  console.log(prop);
                   return (
                     <td key={propertyIndex}>
                       <p>{prop[propertyName]}</p>

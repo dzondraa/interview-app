@@ -1,9 +1,4 @@
-import {
-  Route,
-  Routes,
-  Navigate,
-  BrowserRouter as Router,
-} from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import Questions from "./pages/Questions/Questions";
 import ReviewedCVs from "./pages/ReviewedCVs/ReviewedCVs";
@@ -21,11 +16,7 @@ function App(props) {
       <div className="container-fluid">
         <Router>
           <Routes>
-            <Route
-              exact
-              path="/"
-              element={<Questions />}
-            />
+            <Route exact path="/" element={<Questions />} />
             <Route
               path="/login"
               setToken={tokenService.setToken}
