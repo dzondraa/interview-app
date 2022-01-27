@@ -8,7 +8,7 @@ export default function useLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
-  const api = new Api();
+  const api = Api.getAuthServiceInstance();
   const { token, setToken } = useToken();
 
   useEffect(() => {

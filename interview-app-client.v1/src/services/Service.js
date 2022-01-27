@@ -15,8 +15,16 @@ function joinURL(baseUrl, uri) {
 }
 
 class Api {
-    constructor() {
-        this.domain = config.API_URL
+    constructor(apiUrl) {
+        this.domain = apiUrl
+    }
+
+    static getResourceApiInstance(params) {
+        return new Api(config.RESOURCES)
+    }
+    
+    static getAuthServiceInstance(params) {
+        return new Api(config.AUTH_SERVICE)
     }
 
     request(url, method="POST", data=null) {

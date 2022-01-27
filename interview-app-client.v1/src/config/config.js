@@ -1,4 +1,4 @@
 export default {
-    API_URL_test: "https://reqres.in/api",
-    API_URL: "https://localhost:2222/api"
+    AUTH_SERVICE: "https://reqres.in/api",
+    RESOURCES: "https://localhost:2222/api"
 }
