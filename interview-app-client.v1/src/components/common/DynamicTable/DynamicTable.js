@@ -30,7 +30,7 @@ const DynamicTable = (props) => {
           {props.props.data.map((prop, index) => {
             return (
               <tr key={index}>
-                <th scope="row">{index}</th>
+                <th scope="row">{index + 1}</th>
                 { schema.properties.map((propertyName, propertyIndex) => {
                   return (
                     <td key={propertyIndex}>
