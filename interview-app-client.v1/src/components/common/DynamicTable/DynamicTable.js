@@ -1,20 +1,17 @@
-const DynamicTable = (props) => {
-  const schema = {
-    properties: ["path", "relevancy"],
-  };
-
+const DynamicTable = ({props}) => {
+  console.log(props);
   return (
     <div
       style={{
         overflow: "auto",
-        height: "700px",
+        height: "600px",
       }}
     >
       <table className="table table-hover smart-bear-dyntable">
         <thead>
           <tr>
             <th scope="col">#</th>
-            {schema.properties.map((prop, index) => {
+            {props.schema.properties.map((prop, index) => {
               return <th key={index}>{prop}</th>;
             })}
           </tr>
@@ -27,11 +24,11 @@ const DynamicTable = (props) => {
         >
         </iframe> */}
         <tbody>
-          {props.props.data.map((prop, index) => {
+          {props.data.data.map((prop, index) => {
             return (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>
-                { schema.properties.map((propertyName, propertyIndex) => {
+                {props.schema.properties.map((propertyName, propertyIndex) => {
                   return (
                     <td key={propertyIndex}>
                       <p>{prop[propertyName]}</p>

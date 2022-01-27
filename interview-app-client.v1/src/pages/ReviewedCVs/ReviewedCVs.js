@@ -4,6 +4,9 @@ import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 import SearchDocForm from "../../components/Dashboard/SearchDocForm";
 import "./ReviewedCVs.css";
+import schema from '../../config/entitySchemas/documents'
+;
+
 
 const Questions = () => {
   const [documents, setDocuments] = useState(null);
@@ -32,7 +35,7 @@ const Questions = () => {
             }}
           />
           {isSearching ? <LoaderSpin></LoaderSpin> : null}
-          {documents ? <DynamicTable props={documents}></DynamicTable> : null}
+          {documents && !isSearching ? <DynamicTable props={{schema: schema, data: documents}}></DynamicTable> : null}
         </div>
       </div>
     </div>
