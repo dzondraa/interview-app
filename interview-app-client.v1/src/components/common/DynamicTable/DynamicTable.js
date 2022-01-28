@@ -1,6 +1,8 @@
-const DynamicTable = ({props}) => {
+import noDataImg from "../../../assets/images/nodata.png"
+
+const DynamicTable = ({ props }) => {
   console.log(props);
-  return (
+  return props.data.data.lenght ? (
     <div
       style={{
         overflow: "auto",
@@ -40,6 +42,15 @@ const DynamicTable = ({props}) => {
           })}
         </tbody>
       </table>
+    </div>
+  ) : (
+    <div style={{
+      textAlign: 'center'
+    }}>
+      <img style={{
+        height: '400px',
+      }} src={noDataImg}></img>
+      <h2>We were not able to collect any data :/</h2>
     </div>
   );
 };
