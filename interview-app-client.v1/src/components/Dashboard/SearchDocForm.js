@@ -1,13 +1,23 @@
 import Api from "../../services/Service";
 import config from "../../config/config";
 import { useState } from "react";
-
-const SearchDocForm = ({ parentServices: {setIsSearching, setDocuments} }) => {
+import validator from "validator";
+import ErrorBox from "../common/ErrorBox/ErrorBox";
+const SearchDocForm = ({
+  parentServices: { setIsSearching, setDocuments },
+}) => {
   const api = Api.getResourceApiInstance();
   const [keyword, setKeyword] = useState("");
   const [wordCount, setWordCount] = useState("");
+  const [errors, setErrors] = useState([]);
+
   const submitButton = () => {
-    setIsSearching((value) => (value = !value));
+    const errorList = validate();
+    if (errorList.length) {
+      setErrors((e) => (e = errorList));
+      return;
+    }
+
     api
       .get(
         `documents?path=${config.FILE_REPOSITORY}&targetMatch=${wordCount}&keyword=${keyword}`
@@ -16,6 +26,23 @@ const SearchDocForm = ({ parentServices: {setIsSearching, setDocuments} }) => {
         setDocuments(res);
         setIsSearching((value) => (value = !value));
       });
+
+    setIsSearching((value) => (value = !value));
+  };
+
+  const validate = () => {
+    var errors = [];
+    if (validator.isEmpty(keyword))
+      errors.push({
+        property: "keyword",
+        message: "Keyword limiter is required",
+      });
+    if (validator.isEmpty(wordCount))
+      errors.push({
+        property: "wordcount",
+        message: "Word count limiter is required",
+      });
+    return errors;
   };
 
   return (
@@ -55,6 +82,7 @@ const SearchDocForm = ({ parentServices: {setIsSearching, setDocuments} }) => {
       >
         Scrape!
       </button>
+      {errors.length ? <ErrorBox errors={errors} /> : null}
     </form>
   );
 };

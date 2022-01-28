@@ -11,6 +11,10 @@ const Sidebar = () => {
       name: "Reviewed CVs",
       href: "/reviewed",
     },
+    {
+      name: "Technical areas",
+      href: "/areas",
+    },
   ];
   return (
     <div className="col-lg-3 sidebar-container">
