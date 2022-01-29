@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Collapse, Button } from "react-bootstrap";
+import "./Area.css";
 
 const Area = ({ area }) => {
   const [open, setOpen] = useState(false);
@@ -8,29 +9,23 @@ const Area = ({ area }) => {
     <div className="card" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush">
         <li
-          style={{ cursor: "pointer", marginLeft: "10px" }}
-          className="list-group-item"
+          style={{ cursor: "pointer" }}
+          className={`list-group-item ${area.subareas.length ? "subarea" : ""}`}
         >
-          <Button
+          <span
+            className="bear-span"
             onClick={() => setOpen(!open)}
             aria-controls="example-collapse-text"
             aria-expanded={open}
           >
             {area.name}
             {area.subareas.length ? `(${area.subareas.length})` : null}
-          </Button>
+          </span>
         </li>
         <Collapse in={open}>
           <div id="example-collapse-text">
             {area.subareas.map((subarea, key) => {
-              return (
-                <Area
-                  key={key}
-                  id={area.name}
-                  style={{ marginLeft: "10px" }}
-                  area={subarea}
-                ></Area>
-              );
+              return <Area key={key} id={area.name} area={subarea}></Area>;
             })}
           </div>
         </Collapse>
