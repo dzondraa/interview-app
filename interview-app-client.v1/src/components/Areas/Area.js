@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Collapse, Button } from "react-bootstrap";
+import { Collapse } from "react-bootstrap";
 import "./Area.css";
 
 const Area = ({ area }) => {
   const [open, setOpen] = useState(false);
+  const subareaCount = area.subareas.length;
 
   return (
     <div className="card" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush">
         <li
           style={{ cursor: "pointer" }}
-          className={`list-group-item ${area.subareas.length ? "subarea" : ""}`}
+          className={`list-group-item ${subareaCount ? "subarea" : ""}`}
         >
           <span
             className="bear-span"
@@ -19,7 +20,7 @@ const Area = ({ area }) => {
             aria-expanded={open}
           >
             {area.name}
-            {area.subareas.length ? `(${area.subareas.length})` : null}
+            {subareaCount ? `(${subareaCount})` : null}
           </span>
         </li>
         <Collapse in={open}>
