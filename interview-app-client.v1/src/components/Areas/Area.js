@@ -1,14 +1,22 @@
-const Area = ({area}) => {
-    console.log(area);
+import { useState } from "react";
+
+const Area = ({ area }) => {
+  const [showSubareas, setShowSubareas] = useState();
   return (
-    <div className="card" style={{width: '18rem'}}>
+    <div className="card" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush">
-        <li className="list-group-item">
-          <b>{area.name}</b>
+        <li
+          style={{ cursor: "pointer", marginLeft: '10px' }}
+          className="list-group-item"
+          onClick={(e) => setShowSubareas((show) => (show = !showSubareas))}
+        >
+          {area.subareas.length ? <b>{area.name}</b> : area.name}
         </li>
-        {area.subareas.map((subarea, key) => {
-          return <Area area={subarea} key={key}></Area>
-        })}
+        {showSubareas
+          ? area.subareas.map((subarea, key) => {
+              return <Area area={subarea} key={key}></Area>;
+            })
+          : null}
       </ul>
     </div>
   );
