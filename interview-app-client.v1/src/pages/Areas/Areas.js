@@ -4,24 +4,40 @@ import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 const Areas = () => {
   const areas = [
     {
-      name: "Area1",
+      name: "C#",
       subareas: [
         {
-          name: "sub1",
+          name: "ASP.NET",
           subareas: [
             {
-              name: "sublevel2",
+              name: "API",
+              subareas: [],
+            },
+            {
+              name: "MVC",
               subareas: [],
             },
           ],
         },
+        {
+          name: "Xamarin",
+          subareas: [],
+        },
       ],
     },
     {
-      name: "Area2",
+      name: "Java",
       subareas: [
         {
-          name: "sub2",
+          name: "Maven",
+          subareas: [],
+        },
+        {
+          name: "Mobile",
+          subareas: [],
+        },
+        {
+          name: "Web",
           subareas: [],
         },
       ],
