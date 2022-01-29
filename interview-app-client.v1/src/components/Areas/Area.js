@@ -1,22 +1,39 @@
 import { useState } from "react";
+import { Collapse, Button } from "react-bootstrap";
 
 const Area = ({ area }) => {
-  const [showSubareas, setShowSubareas] = useState();
+  const [open, setOpen] = useState(false);
+
   return (
     <div className="card" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush">
         <li
-          style={{ cursor: "pointer", marginLeft: '10px' }}
+          style={{ cursor: "pointer", marginLeft: "10px" }}
           className="list-group-item"
-          onClick={(e) => setShowSubareas((show) => (show = !showSubareas))}
         >
-          {area.subareas.length ? <b>{area.name}</b> : area.name}
+          <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="example-collapse-text"
+            aria-expanded={open}
+          >
+            {area.name}
+            {area.subareas.length ? `(${area.subareas.length})` : null}
+          </Button>
         </li>
-        {showSubareas
-          ? area.subareas.map((subarea, key) => {
-              return <Area area={subarea} key={key}></Area>;
-            })
-          : null}
+        <Collapse in={open}>
+          <div id="example-collapse-text">
+            {area.subareas.map((subarea, key) => {
+              return (
+                <Area
+                  key={key}
+                  id={area.name}
+                  style={{ marginLeft: "10px" }}
+                  area={subarea}
+                ></Area>
+              );
+            })}
+          </div>
+        </Collapse>
       </ul>
     </div>
   );
