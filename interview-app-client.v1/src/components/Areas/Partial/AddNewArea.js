@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-const AddNewArea = () => {
+const AddNewArea = ({ areas, setAreas, areaId }) => {
+  const [addingNew, setAddingNew] = useState(false);
+  const [area, setArea] = useState(null);
+
   const hadnleAddNewClick = () => {
     setAddingNew((an) => (an = true));
   };
@@ -8,9 +11,30 @@ const AddNewArea = () => {
     !e.target.classList.contains("newAreaInput") &&
       setAddingNew((an) => (an = false));
   };
-  const [addingNew, setAddingNew] = useState(false);
   document.addEventListener("mousedown", handleClickOutside);
 
+  const handleEnter = (e) => {
+    e.code == "Enter" && addNewSubarea(areaId, e.target.value);
+  };
+
+  const addNewSubarea = async (areaId, name) => {
+    await setToAreaWithId(122, areas);
+    console.log(area);
+  };
+
+  const setToAreaWithId = (id, areas) => {
+    areas.forEach((area) => {
+      getById(id, area);
+    });
+  };
+  const getById = (id, area) => {
+    //   console.log(areas);
+    if (area.id == id) setArea((e) => (e = area));
+    else
+      area.subareas.forEach((subarea) => {
+        return getById(id, subarea);
+      });
+  };
   return (
     <div
       onClick={hadnleAddNewClick}
@@ -30,7 +54,7 @@ const AddNewArea = () => {
         className="list-group-item"
       >
         {addingNew ? (
-          <input className="newAreaInput" type="text" />
+          <input onKeyDown={handleEnter} className="newAreaInput" type="text" />
         ) : (
           <span className="bear-span">Add new</span>
         )}

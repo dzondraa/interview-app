@@ -29,7 +29,9 @@ const Area = ({ area }) => {
             {area.subareas.map((subarea, key) => {
               return <Area key={key} id={area.name} area={subarea}></Area>;
             })}
-            {subareaCount > 0 ? <AddNewArea /> : null}
+            {subareaCount > 0 ? (
+              <AddNewArea areaId={0} />
+            ) : null}
           </div>
         </Collapse>
       </ul>
