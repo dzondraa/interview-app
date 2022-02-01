@@ -1,6 +1,19 @@
+import { useState } from "react";
+
 const AddNewArea = () => {
+  const hadnleAddNewClick = () => {
+    setAddingNew((an) => (an = true));
+  };
+  const handleClickOutside = (e) => {
+    !e.target.classList.contains("newAreaInput") &&
+      setAddingNew((an) => (an = false));
+  };
+  const [addingNew, setAddingNew] = useState(false);
+  document.addEventListener("mousedown", handleClickOutside);
+
   return (
     <div
+      onClick={hadnleAddNewClick}
       style={{
         border: "0px solid red",
       }}
@@ -16,7 +29,11 @@ const AddNewArea = () => {
         }}
         className="list-group-item"
       >
-        <span className="bear-span">Add new</span>
+        {addingNew ? (
+          <input className="newAreaInput" type="text" />
+        ) : (
+          <span className="bear-span">Add new</span>
+        )}
       </li>
     </div>
   );
