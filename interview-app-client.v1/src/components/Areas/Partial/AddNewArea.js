@@ -18,8 +18,19 @@ const AddNewArea = ({ areas, setAreas, areaId }) => {
   };
 
   const addNewSubarea = async (areaId, name) => {
-    await setToAreaWithId(122, areas);
-    console.log(area);
+    const insertionArea = {
+      id: 12414,
+      name: name,
+      subareas: [],
+    };
+
+    if (areaId === 0) {
+      areas.push(insertionArea);
+      setAreas((a) => (a = areas));
+    } else {
+      await setToAreaWithId(122, areas);
+      console.log("SET TO: ", area);
+    }
   };
 
   const setToAreaWithId = (id, areas) => {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Area from "../../components/Areas/Area";
 import AddNewArea from "../../components/Areas/Partial/AddNewArea";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
@@ -55,6 +55,10 @@ const Areas = () => {
     },
   ];
   const [areas, setAreas] = useState(initAreas);
+
+  useEffect(() => {
+    // Update the document title using the browser API
+  }, [areas]);
 
   return (
     <div className="container-fluid questions-main">
