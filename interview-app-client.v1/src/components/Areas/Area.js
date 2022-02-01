@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Collapse } from "react-bootstrap";
 import "./Area.css";
+import AddNewArea from "./Partial/AddNewArea";
 
 const Area = ({ area }) => {
   const [open, setOpen] = useState(false);
@@ -8,7 +9,7 @@ const Area = ({ area }) => {
 
   return (
     <div className="card" style={{ width: "18rem" }}>
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush bear-list">
         <li
           style={{ cursor: "pointer" }}
           className={`list-group-item ${subareaCount ? "subarea" : ""}`}
@@ -28,6 +29,7 @@ const Area = ({ area }) => {
             {area.subareas.map((subarea, key) => {
               return <Area key={key} id={area.name} area={subarea}></Area>;
             })}
+            {subareaCount > 0 ? <AddNewArea /> : null}
           </div>
         </Collapse>
       </ul>

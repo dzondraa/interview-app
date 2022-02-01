@@ -1,4 +1,5 @@
 import Area from "../../components/Areas/Area";
+import AddNewArea from "../../components/Areas/Partial/AddNewArea";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 
 const Areas = () => {
@@ -61,6 +62,7 @@ const Areas = () => {
             {areas.map((area, key) => {
               return <Area area={area} key={key} />;
             })}
+            <AddNewArea />
           </div>
         </div>
       </div>
