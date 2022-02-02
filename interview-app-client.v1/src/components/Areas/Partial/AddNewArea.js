@@ -65,8 +65,12 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
             autoFocus={true}
             id="newArea"
             onKeyDown={handleEnter}
-            className="newAreaInput"
+            className="newAreaInput form-control"
             type="text"
+            placeholder="New area name"
+            style={{
+              height: "25px",
+            }}
           />
         ) : (
           <span className="bear-span">Add new</span>
