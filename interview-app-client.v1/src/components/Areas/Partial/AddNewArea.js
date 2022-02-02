@@ -1,5 +1,4 @@
 import { useState } from "react";
-import ReactDOM from "react-dom";
 
 const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
   const [addingNew, setAddingNew] = useState(false);
@@ -13,7 +12,6 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
     !e.target.classList.contains("newAreaInput") &&
       setAddingNew((an) => (an = false));
   };
-
   document.addEventListener("mousedown", handleClickOutside);
 
   // Do insert on 'Enter' key
@@ -26,7 +24,6 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
       name: name,
       subareas: [],
     };
-
     if (areaId === 0) addNewAreaDOM(insertionArea);
     else await setToAreaWithId(122, areas);
     setAddingNew((an) => (an = false));
@@ -44,6 +41,7 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
         return getById(id, subarea);
       });
   };
+
   return (
     <div
       onClick={hadnleAddNewClick}
@@ -63,7 +61,13 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
         className="list-group-item"
       >
         {addingNew ? (
-          <input onKeyDown={handleEnter} className="newAreaInput" type="text" />
+          <input
+            autoFocus={true}
+            id="newArea"
+            onKeyDown={handleEnter}
+            className="newAreaInput"
+            type="text"
+          />
         ) : (
           <span className="bear-span">Add new</span>
         )}

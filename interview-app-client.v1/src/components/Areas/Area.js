@@ -3,9 +3,30 @@ import { Collapse } from "react-bootstrap";
 import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
-const Area = ({ area }) => {
+const Area = ({ area, areas }) => {
+  
   const [open, setOpen] = useState(false);
   const subareaCount = area.subareas.length;
+  const [subareas, setSubareas] = useState(areas)
+
+  const addNewAreaDOM = (areaToAdd) => {
+    areas.push(areaToAdd);
+    // setAreas((a) => (a = buildAreasDOM(areasFromDB)));
+  };
+
+  const buildAreasDOM = (areas) => {
+    return areas.map((area, key) => {
+      return (
+        <Area
+          area={area}
+          key={key}
+          areas={areas}
+          addNewAreaDOM={addNewAreaDOM}
+        />
+      );
+    });
+  };
+
 
   return (
     <div className="card" style={{ width: "18rem" }}>
@@ -30,7 +51,11 @@ const Area = ({ area }) => {
               return <Area key={key} id={area.name} area={subarea}></Area>;
             })}
             {subareaCount > 0 ? (
-              <AddNewArea areaId={0} />
+              <AddNewArea
+                areaId={area}
+                areas={areas}
+                addNewAreaDOM={addNewAreaDOM}
+              />
             ) : null}
           </div>
         </Collapse>
