@@ -4,7 +4,7 @@ import AddNewArea from "../../components/Areas/Partial/AddNewArea";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 
 const Areas = () => {
-  const initAreas = [
+  var areasFromDB = [
     {
       id: 1,
       name: "C#",
@@ -54,17 +54,27 @@ const Areas = () => {
       ],
     },
   ];
-  const [areas, setAreas] = useState(initAreas);
+  const buildAreasDOM = (areas) => {
+    var res = areas.map((area, key) => {
+      return <Area area={area} key={key} />;
+    });
+    console.log(res);
+    return res;
+  };
 
-  useEffect(() => {
-    // Update the document title using the browser API
-  }, [areas]);
+  const addNewAreaDOM = (areaToAdd) => {
+    areasFromDB.push(areaToAdd);
+    console.log(areas);
+    setAreas((a) => (a = buildAreasDOM(areasFromDB)));
+  };
+
+  const [areas, setAreas] = useState(buildAreasDOM(areasFromDB));
 
   return (
     <div className="container-fluid questions-main">
       <div className="row">
         <Sidebar></Sidebar>
-        <div className="col-lg-6">
+        <div id="areas-container" className="col-lg-6">
           <h1
             style={{
               marginTop: "15px",
@@ -75,10 +85,8 @@ const Areas = () => {
             Areas and fields
           </h1>
           <div className="col-lg-6">
-            {areas.map((area, key) => {
-              return <Area area={area} key={key} />;
-            })}
-            <AddNewArea areaId={0} areas={areas} setAreas={setAreas} />
+            {areas}
+            <AddNewArea areaId={0} areas={areas} addNewAreaDOM={addNewAreaDOM} />
           </div>
         </div>
       </div>
