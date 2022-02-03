@@ -53,8 +53,15 @@ const Area = ({ area, areas }) => {
           >
             {area.name}
             {subareaCount > 0 ? ` (${subareaCount})` : null}
-            {subareaCount ?  collapsiveArrow : null}
           </span>
+          {subareaCount ? collapsiveArrow : null}
+          <input
+            style={{ float: "left" }}
+            class="form-check-input"
+            type="checkbox"
+            value={area.area}
+            id={area.name}
+          />
         </li>
         <Collapse in={open}>
           <div style={{ border: 0 }} id="example-collapse-text">
