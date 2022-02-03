@@ -39,11 +39,8 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
   return (
     <div
       onClick={hadnleAddNewClick}
-      style={{
-        border: "0px solid red",
-      }}
       className="card add-new"
-      style={{ width: "18rem", border: 0 }}
+      style={{ width: "18rem", border: 0, marginLeft: '5px', width: '284px' }}
     >
       <li
         style={{
@@ -51,6 +48,9 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
           backgroundColor: "gainsboro",
           color: "steelblue",
           cursor: "pointer",
+          marginLeft: "5px !important",
+          marginTop: '5px',
+          fontWeight: 'bold'
         }}
         className="list-group-item"
       >

@@ -63,7 +63,7 @@ const Areas = () => {
     <div className="container-fluid questions-main">
       <div className="row">
         <Sidebar></Sidebar>
-        <div id="areas-container" className="col-lg-6">
+        <div id="areas-container" className="col-lg-10">
           <h1
             style={{
               marginTop: "15px",

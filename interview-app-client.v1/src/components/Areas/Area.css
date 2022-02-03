@@ -8,11 +8,19 @@
 .subarea {
   background-color: #fff !important;
   color: #4e73df !important;
-  border: 1px solid #4e73df !important;
+  border: 2px solid #4e73df !important;
 }
 
 .bear-list {
+  margin-top: 5px;
   border: 0;
+  margin-left: 5px;
+  font-weight: bold;
+  width: 500px;
+}
+
+.bear-list li {
+  width: 284px !important;
 }
 
 .my-crd {
