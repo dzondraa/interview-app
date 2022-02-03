@@ -20,6 +20,24 @@ const Area = ({ area, areas }) => {
     setOpen(!open);
   };
 
+  var collapsiveArrow = open ? (
+    <FontAwesomeIcon
+      icon={faCaretDown}
+      style={{
+        marginTop: "5px",
+        float: "right",
+      }}
+    />
+  ) : (
+    <FontAwesomeIcon
+      icon={faCaretRight}
+      style={{
+        marginTop: "5px",
+        float: "right",
+      }}
+    />
+  );
+
   return (
     <div className="card my-crd" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush bear-list">
@@ -34,24 +52,8 @@ const Area = ({ area, areas }) => {
             aria-expanded={open}
           >
             {area.name}
-            {subareaCount ? ` (${subareaCount})` : null}
-            {open ? (
-              <FontAwesomeIcon
-                icon={faCaretDown}
-                style={{
-                  marginTop: "5px",
-                  float: "right",
-                }}
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faCaretRight}
-                style={{
-                  marginTop: "5px",
-                  float: "right",
-                }}
-              />
-            )}
+            {subareaCount > 0 ? ` (${subareaCount})` : null}
+            {subareaCount ?  collapsiveArrow : null}
           </span>
         </li>
         <Collapse in={open}>
