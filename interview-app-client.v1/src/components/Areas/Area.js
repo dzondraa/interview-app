@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Collapse } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
@@ -14,27 +16,54 @@ const Area = ({ area, areas }) => {
   const subareaCount = area.subareas.length;
   const [subareas, setSubareas] = useState(buildAreasDOM(area.subareas));
 
+  const toggleArea = (e) => {
+    setOpen(!open);
+  };
+
   return (
-    <div className="card" style={{ width: "18rem" }}>
+    <div className="card my-crd" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush bear-list">
         <li
           style={{ cursor: "pointer" }}
-          className={`list-group-item subarea`}
+          className={`list-group-item subarea ${area.name} ${open}`}
         >
           <span
             className="bear-span"
-            onClick={() => setOpen(!open)}
+            onClick={toggleArea}
             aria-controls="example-collapse-text"
             aria-expanded={open}
           >
             {area.name}
-            {subareaCount ? `(${subareaCount})` : null}
+            {subareaCount ? ` (${subareaCount})` : null}
+            {open ? (
+              <FontAwesomeIcon
+                icon={faCaretDown}
+                style={{
+                  marginTop: "5px",
+                  float: "right",
+                }}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faCaretRight}
+                style={{
+                  marginTop: "5px",
+                  float: "right",
+                }}
+              />
+            )}
           </span>
         </li>
         <Collapse in={open}>
-          <div id="example-collapse-text">
+          <div style={{ border: 0 }} id="example-collapse-text">
             {subareas}
-            {subareaCount > 0 ? <AddNewArea setSubareas={setSubareas} buildAreasDOM={buildAreasDOM} area={area} /> : null}
+            {subareaCount > 0 ? (
+              <AddNewArea
+                setSubareas={setSubareas}
+                buildAreasDOM={buildAreasDOM}
+                area={area}
+              />
+            ) : null}
           </div>
         </Collapse>
       </ul>

@@ -20,14 +20,19 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
   };
 
   const addNewSubarea = async (name) => {
+    // retrieve current state
     const areaState = thisArea;
+    // add new area
     areaState.subareas.push({
       id: 123,
       name: name,
       subareas: [],
     });
+    // build dom
     const dom = buildAreasDOM(areaState.subareas);
+    // change state
     setSubareas((sub) => (sub = dom));
+    // change UI
     setAddingNew((an) => (an = false));
   };
 
@@ -38,7 +43,7 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
         border: "0px solid red",
       }}
       className="card add-new"
-      style={{ width: "18rem" }}
+      style={{ width: "18rem", border: 0 }}
     >
       <li
         style={{
