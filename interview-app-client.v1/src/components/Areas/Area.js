@@ -4,36 +4,22 @@ import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
 const Area = ({ area, areas }) => {
-  
-  const [open, setOpen] = useState(false);
-  const subareaCount = area.subareas.length;
-  const [subareas, setSubareas] = useState(areas)
-
-  const addNewAreaDOM = (areaToAdd) => {
-    areas.push(areaToAdd);
-    // setAreas((a) => (a = buildAreasDOM(areasFromDB)));
-  };
-
   const buildAreasDOM = (areas) => {
     return areas.map((area, key) => {
-      return (
-        <Area
-          area={area}
-          key={key}
-          areas={areas}
-          addNewAreaDOM={addNewAreaDOM}
-        />
-      );
+      return <Area area={area} key={key} areas={areas} />;
     });
   };
 
+  const [open, setOpen] = useState(false);
+  const subareaCount = area.subareas.length;
+  const [subareas, setSubareas] = useState(buildAreasDOM(area.subareas));
 
   return (
     <div className="card" style={{ width: "18rem" }}>
       <ul className="list-group list-group-flush bear-list">
         <li
           style={{ cursor: "pointer" }}
-          className={`list-group-item ${subareaCount ? "subarea" : ""}`}
+          className={`list-group-item subarea`}
         >
           <span
             className="bear-span"
@@ -47,16 +33,8 @@ const Area = ({ area, areas }) => {
         </li>
         <Collapse in={open}>
           <div id="example-collapse-text">
-            {area.subareas.map((subarea, key) => {
-              return <Area key={key} id={area.name} area={subarea}></Area>;
-            })}
-            {subareaCount > 0 ? (
-              <AddNewArea
-                areaId={area}
-                areas={areas}
-                addNewAreaDOM={addNewAreaDOM}
-              />
-            ) : null}
+            {subareas}
+            {subareaCount > 0 ? <AddNewArea setSubareas={setSubareas} buildAreasDOM={buildAreasDOM} area={area} /> : null}
           </div>
         </Collapse>
       </ul>

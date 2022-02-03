@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
+const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
   const [addingNew, setAddingNew] = useState(false);
-  const [area, setArea] = useState(null);
+  const [thisArea, setThisArea] = useState(area);
 
   // Handle events for toggle input field
   const hadnleAddNewClick = () => {
@@ -16,30 +16,19 @@ const AddNewArea = ({ areas, addNewAreaDOM, areaId }) => {
 
   // Do insert on 'Enter' key
   const handleEnter = (e) => {
-    e.code == "Enter" && addNewSubarea(areaId, e.target.value);
+    e.code == "Enter" && addNewSubarea(e.target.value);
   };
 
-  const addNewSubarea = async (areaId, name) => {
-    const insertionArea = {
+  const addNewSubarea = async (name) => {
+    const areaState = thisArea;
+    areaState.subareas.push({
+      id: 123,
       name: name,
       subareas: [],
-    };
-    if (areaId === 0) addNewAreaDOM(insertionArea);
-    else await setToAreaWithId(122, areas);
-    setAddingNew((an) => (an = false));
-  };
-
-  const setToAreaWithId = (id, areas) => {
-    areas.forEach((area) => {
-      getById(id, area);
     });
-  };
-  const getById = (id, area) => {
-    if (area.id == id) setArea((e) => (e = area));
-    else
-      area.subareas.forEach((subarea) => {
-        return getById(id, subarea);
-      });
+    const dom = buildAreasDOM(areaState.subareas);
+    setSubareas((sub) => (sub = dom));
+    setAddingNew((an) => (an = false));
   };
 
   return (
