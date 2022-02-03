@@ -57,7 +57,7 @@ const Area = ({ area, areas }) => {
           {subareaCount ? collapsiveArrow : null}
           <input
             style={{ float: "left" }}
-            class="form-check-input"
+            className="form-check-input"
             type="checkbox"
             value={area.area}
             id={area.name}
