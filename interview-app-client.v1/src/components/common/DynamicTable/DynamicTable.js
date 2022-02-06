@@ -1,7 +1,14 @@
 import noDataImg from "../../../assets/images/nodata.png";
 
+/**
+ * Use this component to display your list of entity in table
+ * @param {Object} props - Object which contains 2 child objects { data, schema}
+ * @param {Object} data - List of records
+ * @param {Object} schema - Entity schema - entity descriptor
+ */
 const DynamicTable = ({ props }) => {
-  return props.data.data.length > 0 ? (
+  console.log(props, "PROPS");
+  return props.data.length > 0 ? (
     <div
       style={{
         overflow: "auto",
@@ -25,7 +32,7 @@ const DynamicTable = ({ props }) => {
         >
         </iframe> */}
         <tbody>
-          {props.data.data.map((prop, index) => {
+          {props.data.map((prop, index) => {
             return (
               <tr key={index}>
                 <th scope="row">{index + 1}</th>

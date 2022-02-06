@@ -15,6 +15,10 @@ const Sidebar = () => {
       name: "Technical areas",
       href: "/areas",
     },
+    {
+      name: "Candidates",
+      href: "/candidates"
+    }
   ];
   return (
     <div className="col-lg-2 sidebar-container">

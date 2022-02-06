@@ -11,20 +11,21 @@ const SearchDocForm = ({
   const [wordCount, setWordCount] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const submitButton = () => {
+  const submitButton = async () => {
     const errorList = validate();
     setErrors((e) => (e = errorList));
     if (errorList.length) return;
-    api
-      .get(
-        `documents?path=${config.FILE_REPOSITORY}&targetMatch=${wordCount}&keyword=${keyword}`
-      )
-      .then((res) => {
-        setDocuments(res);
-        setIsSearching((value) => (value = !value));
-      });
-
     setIsSearching((value) => (value = !value));
+    try {
+      var res = await api.get(
+        `documents?path=${config.FILE_REPOSITORY}&targetMatch=${wordCount}&keyword=${keyword}`
+      );
+      setDocuments(res.data);
+    } catch (er) {
+      setIsSearching((value) => (value = !value));
+      setErrors([{ message: er.message }]);
+      console.error(er);
+    }
   };
 
   const validate = () => {

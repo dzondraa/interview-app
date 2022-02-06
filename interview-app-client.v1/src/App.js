@@ -4,6 +4,7 @@ import Questions from "./pages/Questions/Questions";
 import Areas from "./pages/Areas/Areas";
 import ReviewedCVs from "./pages/ReviewedCVs/ReviewedCVs";
 import useToken from "./hooks/useToken";
+import CandidatesPage from "./pages/Candidates/CandidatesPage";
 
 function App(props) {
   const tokenService = useToken();
@@ -26,6 +27,7 @@ function App(props) {
             <Route path="/questions" element={<Questions />} />
             <Route path="/reviewed" element={<ReviewedCVs />} />
             <Route path="/areas" element={<Areas />} />
+            <Route path="/candidates" element={<CandidatesPage />} />
           </Routes>
         </Router>
       </div>

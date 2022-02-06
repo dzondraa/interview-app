@@ -48,7 +48,6 @@ class ApiFactory {
       options.body = JSON.stringify(data);
     }
 
-    console.log("opt", options);
     return fetch(url, options);
   }
 
