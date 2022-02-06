@@ -14,3 +14,10 @@
 - File system
 - MongoDB
 <img src="https://www.cloudsavvyit.com/p/uploads/2021/07/f5932bc2.jpg?width=1198&trim=1,1&bg-color=000&pad=1,1" height="50">
+
+## Applicaiton health (Sentry)
+- Load metrics
+- Performance metrics
+- Unhandled excaptions 
+- Traces
+<img src="https://vectorlogoseek.com/wp-content/uploads/2020/02/sentry-io-vector-logo.png" height="50">
