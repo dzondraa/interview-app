@@ -1,12 +1,16 @@
 import config from "../config/config";
 
 const headers = {
-  "Accept": "application/json",
+  Accept: "application/json",
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Request-Method": "*",
   "Access-Control-Request-Headers": "*",
-  "Authorization": `Bearer ${localStorage.getItem('token') ? localStorage.getItem('token').replaceAll('"', '') : null}`
+  Authorization: `Bearer ${
+    localStorage.getItem("token")
+      ? localStorage.getItem("token").replaceAll('"', "")
+      : null
+  }`,
 };
 
 function joinURL(baseUrl, uri) {
@@ -47,8 +51,6 @@ class ApiFactory {
     if (data != null) {
       options.body = JSON.stringify(data);
     }
-
-    console.log("opt", options);
     return fetch(url, options);
   }
 
