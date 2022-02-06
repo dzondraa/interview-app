@@ -4,7 +4,6 @@ import Login from "../../components/Login/Login";
 import backgroundImage from "../../assets/images/interview.png" 
 
 const LoginPage = () => {
-  console.log(backgroundImage);
   return (
     <div className="container">
       <div className="row justify-content-center">

@@ -58,7 +58,6 @@ export default function useLogin() {
   };
 
   const handleGoogleLogin = (payload) => {
-    console.log(payload.tokenId);
     if(payload.tokenId) setToken(payload.tokenId)
     else alert("Something went wrong with Google auth!")
   } 

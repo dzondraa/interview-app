@@ -7,7 +7,6 @@ import noDataImg from "../../../assets/images/nodata.png";
  * @param {Object} schema - Entity schema - entity descriptor
  */
 const DynamicTable = ({ props }) => {
-  console.log(props, "PROPS");
   return props.data.length > 0 ? (
     <div
       style={{
