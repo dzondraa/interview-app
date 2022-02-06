@@ -57,6 +57,12 @@ export default function useLogin() {
     return errors;
   };
 
+  const handleGoogleLogin = (payload) => {
+    console.log(payload.tokenId);
+    if(payload.tokenId) setToken(payload.tokenId)
+    else alert("Something went wrong with Google auth!")
+  } 
+
   const redirect = () => {
     window.location.href = "questions";
   };
@@ -66,5 +72,6 @@ export default function useLogin() {
     errors,
     setEmail,
     setPassword,
+    handleGoogleLogin
   };
 }
