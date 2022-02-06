@@ -12,7 +12,7 @@ const Sidebar = () => {
   }
 
   const navigation = [
-    { name: "Build CV", href: "#" },
+    // { name: "Build CV", href: "#" },
     {
       name: "Reviewed CVs",
       href: "/reviewed",
@@ -52,8 +52,10 @@ const Sidebar = () => {
 
         {navigation.map((navigationElement, index) => {
           return (
-            <Link key={index} to={navigationElement.href}>
-              <li className="nav-item active">
+            <Link style={{
+              textDecoration: 'none'
+            }} key={index} to={navigationElement.href}>
+              <li className="nav-item active my-link">
                 <p className="nav-link" href="#">
                   <i className="fas fa-fw fa-tachometer-alt"></i>
                   <span>{navigationElement.name}</span>

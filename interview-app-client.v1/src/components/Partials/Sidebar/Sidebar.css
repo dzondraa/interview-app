@@ -1,3 +1,11 @@
 .sidebar-container ul {
-    width: 100% !important;
+  width: 100% !important;
+}
+
+.my-link:hover {
+  background-color: #fff;
+}
+
+.my-link:hover span {
+    color: #224abe;
 }
