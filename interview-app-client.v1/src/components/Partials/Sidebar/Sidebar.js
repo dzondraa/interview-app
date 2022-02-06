@@ -5,6 +5,12 @@ import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Sidebar = () => {
+
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/'
+  }
+
   const navigation = [
     { name: "Build CV", href: "#" },
     {
@@ -17,8 +23,8 @@ const Sidebar = () => {
     },
     {
       name: "Candidates",
-      href: "/candidates"
-    }
+      href: "/candidates",
+    },
   ];
   return (
     <div className="col-lg-2 sidebar-container">
@@ -57,6 +63,19 @@ const Sidebar = () => {
             </Link>
           );
         })}
+        <li
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={logout}
+          className="nav-item active"
+        >
+          <p className="nav-link" href="#">
+            <i className="fas fa-fw fa-tachometer-alt"></i>
+            <span>Logout</span>
+          </p>
+          <hr className="sidebar-divider my-0"></hr>
+        </li>
       </ul>
     </div>
   );
