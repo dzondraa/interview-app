@@ -18,7 +18,7 @@ const Questions = () => {
     <div className="container-fluid questions-main">
       <div className="row">
         <Sidebar></Sidebar>
-        <div className="col-lg-6">
+        <div className="col-lg-10">
           <h1
             style={{
               marginTop: "15px",

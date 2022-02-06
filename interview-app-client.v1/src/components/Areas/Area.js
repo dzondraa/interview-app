@@ -1,33 +1,78 @@
 import { useState } from "react";
 import { Collapse } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import "./Area.css";
+import AddNewArea from "./Partial/AddNewArea";
 
-const Area = ({ area }) => {
+const Area = ({ area, areas }) => {
+  const buildAreasDOM = (areas) => {
+    return areas.map((area, key) => {
+      return <Area area={area} key={key} areas={areas} />;
+    });
+  };
+
   const [open, setOpen] = useState(false);
   const subareaCount = area.subareas.length;
+  const [subareas, setSubareas] = useState(buildAreasDOM(area.subareas));
+
+  const toggleArea = (e) => {
+    setOpen(!open);
+  };
+
+  var collapsiveArrow = open ? (
+    <FontAwesomeIcon
+      icon={faCaretDown}
+      style={{
+        marginTop: "5px",
+        float: "right",
+      }}
+    />
+  ) : (
+    <FontAwesomeIcon
+      icon={faCaretRight}
+      style={{
+        marginTop: "5px",
+        float: "right",
+      }}
+    />
+  );
 
   return (
-    <div className="card" style={{ width: "18rem" }}>
-      <ul className="list-group list-group-flush">
+    <div className="card my-crd" style={{ width: "18rem" }}>
+      <ul className="list-group list-group-flush bear-list">
         <li
           style={{ cursor: "pointer" }}
-          className={`list-group-item ${subareaCount ? "subarea" : ""}`}
+          className={`list-group-item subarea ${area.name} ${open}`}
         >
           <span
             className="bear-span"
-            onClick={() => setOpen(!open)}
+            onClick={toggleArea}
             aria-controls="example-collapse-text"
             aria-expanded={open}
           >
             {area.name}
-            {subareaCount ? `(${subareaCount})` : null}
+            {subareaCount > 0 ? ` (${subareaCount})` : null}
           </span>
+          {subareaCount ? collapsiveArrow : null}
+          <input
+            style={{ float: "left" }}
+            className="form-check-input"
+            type="checkbox"
+            value={area.area}
+            id={area.name}
+          />
         </li>
         <Collapse in={open}>
-          <div id="example-collapse-text">
-            {area.subareas.map((subarea, key) => {
-              return <Area key={key} id={area.name} area={subarea}></Area>;
-            })}
+          <div style={{ border: 0 }} id="example-collapse-text">
+            {subareas}
+            {subareaCount > 0 ? (
+              <AddNewArea
+                setSubareas={setSubareas}
+                buildAreasDOM={buildAreasDOM}
+                area={area}
+              />
+            ) : null}
           </div>
         </Collapse>
       </ul>

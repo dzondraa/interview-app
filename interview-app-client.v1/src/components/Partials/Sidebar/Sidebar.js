@@ -17,7 +17,7 @@ const Sidebar = () => {
     },
   ];
   return (
-    <div className="col-lg-3 sidebar-container">
+    <div className="col-lg-2 sidebar-container">
       <ul
         className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
         id="accordionSidebar"

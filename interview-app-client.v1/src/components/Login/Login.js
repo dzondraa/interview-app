@@ -1,10 +1,11 @@
 import { Form, Button } from "react-bootstrap";
 import useLogin from "../../hooks/useLogin";
+import GoogleLogin from "react-google-login";
 
 import "./Login.css";
 
 const Login = () => {
-  const { errors, handleSubmit, setEmail, setPassword } = useLogin();
+  const { errors, handleSubmit, setEmail, setPassword, handleGoogleLogin } = useLogin();
 
   return (
     <div className="form-container">
@@ -40,9 +41,15 @@ const Login = () => {
         <Button onClick={handleSubmit} variant="primary">
           <b>Log in</b>
         </Button>
+        <GoogleLogin
+          clientId={"872082864185-goq6342defqjv0u6ipt84g3ejll8gg4q.apps.googleusercontent.com"}
+          buttonText="Log in with Google"
+          onSuccess={handleGoogleLogin}
+          onFailure={handleGoogleLogin}
+          cookiePolicy={"single_host_origin"}
+        />
       </Form>
       {errors}
-
     </div>
   );
 };
