@@ -15,16 +15,17 @@ const SearchDocForm = ({
     const errorList = validate();
     setErrors((e) => (e = errorList));
     if (errorList.length) return;
-    setIsSearching((value) => (value = !value));
     try {
+      setIsSearching((value) => (value = true));
       var res = await api.get(
         `documents?path=${config.FILE_REPOSITORY}&targetMatch=${wordCount}&keyword=${keyword}`
       );
       setDocuments(res.data);
     } catch (er) {
-      setIsSearching((value) => (value = !value));
       setErrors([{ message: er.message }]);
       console.error(er);
+    } finally {
+      setIsSearching((value) => (value = false));
     }
   };
 
@@ -82,7 +83,7 @@ const SearchDocForm = ({
           Scrape!
         </button>
       </form>
-      {errors.length ? <ErrorBox errors={errors} /> : null}
+      {errors.length > 0 ? <ErrorBox errors={errors} /> : null}
     </>
   );
 };

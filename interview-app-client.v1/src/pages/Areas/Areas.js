@@ -11,9 +11,8 @@ const Areas = () => {
   const [areas, setAreas] = useState([]);
   const [error, setError] = useState(null);
   useEffect(async () => {
-    const response = null;
     try {
-      response = await api.get("area");
+      const response = await api.get("area");
       setAreas(response);
     } catch (er) {
       console.error(er);
