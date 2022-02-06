@@ -36,10 +36,10 @@ const Areas = () => {
             Areas and fields
           </h1>
           <div className="col-lg-6">
-            {areas.length != 0 || error ? null : <LoaderSpin />}
             {areas.length != 0 && <Area id={areas.name} area={areas}></Area>}
             {error && <ErrorBox errors={[{ message: error }]} />}
           </div>
+          {areas.length != 0 || error ? null : <LoaderSpin />}
         </div>
       </div>
     </div>
