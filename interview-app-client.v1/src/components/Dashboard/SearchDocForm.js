@@ -20,7 +20,8 @@ const SearchDocForm = ({
         `documents?path=${config.FILE_REPOSITORY}&targetMatch=${wordCount}&keyword=${keyword}`
       )
       .then((res) => {
-        setDocuments(res);
+        // console.log(res.data);
+        setDocuments(res.data);
         setIsSearching((value) => (value = !value));
       });
 
