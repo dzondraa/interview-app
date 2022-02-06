@@ -6,7 +6,7 @@ const headers = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Request-Method": "*",
   "Access-Control-Request-Headers": "*",
-  "Authorization": `Bearer ${localStorage.getItem('token')}`
+  "Authorization": `Bearer ${localStorage.getItem('token') ? localStorage.getItem('token').replaceAll('"', '') : null}`
 };
 
 function joinURL(baseUrl, uri) {
