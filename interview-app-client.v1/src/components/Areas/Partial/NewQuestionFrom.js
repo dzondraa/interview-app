@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ErrorBox from "../../common/ErrorBox/ErrorBox";
 import validator from "validator";
 import ApiFactory from "../../../services/Service";
+import SuccessBox from "../../common/SuccessBox/SuccessBox";
 
 const NewQuestionForm = ({ selectedAreas }) => {
   const api = ApiFactory.getResourceApiInstance();
@@ -17,17 +18,25 @@ const NewQuestionForm = ({ selectedAreas }) => {
   const [complexity, setComplexity] = useState(0);
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
+  const [successMessages, setSuccessMessages] = useState([]);
 
   const addNewArea = async () => {
     const isValid = validate();
 
-    if (isValid)
-      await api.post("question", {
-        name: name,
-        complexity: complexity,
-        description: description,
-        areas: selectedAreas,
-      });
+    if (isValid) {
+      try {
+        const response = await api.post("question", {
+          name: name,
+          complexity: complexity,
+          description: description,
+          areas: selectedAreas,
+        });
+        if(response) setSuccessMessages([{message: 'Sucessfully created question!'}])
+      } catch (ex) {
+        console.error(ex);
+        setErrors((e) => (e = { message: ex.message }));
+      }
+    }
   };
   const validate = () => {
     var errList = [];
@@ -87,6 +96,7 @@ const NewQuestionForm = ({ selectedAreas }) => {
         Save
       </button>
       {errors.length > 0 && <ErrorBox errors={errors} />}
+      {successMessages.length > 0 && <SuccessBox messages={successMessages} />}
     </form>
   );
 };
