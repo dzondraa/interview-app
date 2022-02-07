@@ -55,16 +55,10 @@ const Areas = () => {
               Areas and fields
             </h1>
             <div className="col-lg-4">
-              {areas.length != 0 && (
-                <Area area={areas} checkChange={checkChange}></Area>
-              )}
-              {error && <ErrorBox errors={[{ message: error }]} />}
-              {areas.length != 0 || error ? null : <LoaderSpin />}
-            </div>
-            <div className="col-lg-6">
               <button
                 style={{
-                  width: "150px",
+                  width: "100px",
+                  marginLeft: '5px'
                 }}
                 onClick={deleteAreas}
                 type="button"
@@ -72,7 +66,13 @@ const Areas = () => {
               >
                 Delete
               </button>
+              {areas.length != 0 && (
+                <Area area={areas} checkChange={checkChange}></Area>
+              )}
+              {error && <ErrorBox errors={[{ message: error }]} />}
+              {areas.length != 0 || error ? null : <LoaderSpin />}
             </div>
+            <div className="col-lg-6"></div>
           </div>
         </div>
       </div>

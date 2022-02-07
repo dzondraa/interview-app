@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Collapse } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
@@ -17,9 +21,15 @@ const Area = ({ area, areas, checkChange }) => {
   const [open, setOpen] = useState(false);
   const subareaCount = area.subareas.length;
   const [subareas, setSubareas] = useState(buildAreasDOM(area.subareas));
+  const [showAdd, setShowAdd] = useState(subareaCount > 0);
 
   const toggleArea = (e) => {
     setOpen(!open);
+  };
+
+  const toggleAddNew = (e) => {
+    setOpen(true);
+    setShowAdd((e) => (e = !e));
   };
 
   useEffect(() => {
@@ -60,7 +70,18 @@ const Area = ({ area, areas, checkChange }) => {
             {area.name}
             {subareaCount > 0 ? ` (${subareaCount})` : null}
           </span>
-          {subareaCount ? collapsiveArrow : null}
+          {showAdd ? (
+            collapsiveArrow
+          ) : (
+            <FontAwesomeIcon
+              icon={faPlus}
+              onClick={toggleAddNew}
+              style={{
+                marginTop: "5px",
+                float: "right",
+              }}
+            />
+          )}
           <input
             style={{ float: "left" }}
             className="form-check-input"
@@ -73,7 +94,7 @@ const Area = ({ area, areas, checkChange }) => {
         <Collapse in={open}>
           <div style={{ border: 0 }} id="example-collapse-text">
             {subareas}
-            {subareaCount > 0 ? (
+            {showAdd ? (
               <AddNewArea
                 setSubareas={setSubareas}
                 buildAreasDOM={buildAreasDOM}
