@@ -55,7 +55,8 @@ const Areas = () => {
             >
               Areas and fields
             </h1>
-            <div className="col-lg-3">
+            <div className="col-lg-4">
+              <h3>Technical fields</h3>
               <button
                 style={{
                   width: "100px",
@@ -65,7 +66,7 @@ const Areas = () => {
                 type="button"
                 className="btn btn-danger"
               >
-                Delete
+                Delete 
               </button>
               {areas.length != 0 && (
                 <Area area={areas} checkChange={checkChange}></Area>
@@ -74,8 +75,8 @@ const Areas = () => {
               {areas.length != 0 || error ? null : <LoaderSpin />}
             </div>
             <div className="col-lg-6">
-              <h2>Add new question to selected areas</h2>
-              <NewQuestionForm />
+              <h3>Add new question to selected areas</h3>
+              <NewQuestionForm selectedAreas={selectedAreas} />
             </div>
           </div>
         </div>
