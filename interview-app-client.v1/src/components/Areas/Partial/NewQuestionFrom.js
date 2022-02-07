@@ -20,9 +20,16 @@ const NewQuestionForm = ({ selectedAreas }) => {
   const [errors, setErrors] = useState([]);
   const [successMessages, setSuccessMessages] = useState([]);
 
+  const handleSuccess = () => {
+    document.getElementById('questionForm').reset()
+    setSuccessMessages([{ message: "Sucessfully created question!" }]);
+    setTimeout(() => {
+      setSuccessMessages([]);
+    }, 5000);
+  };
+
   const addNewArea = async () => {
     const isValid = validate();
-
     if (isValid) {
       try {
         const response = await api.post("question", {
@@ -31,7 +38,7 @@ const NewQuestionForm = ({ selectedAreas }) => {
           description: description,
           areas: selectedAreas,
         });
-        if(response) setSuccessMessages([{message: 'Sucessfully created question!'}])
+        if (response) handleSuccess();
       } catch (ex) {
         console.error(ex);
         setErrors((e) => (e = { message: ex.message }));
@@ -49,7 +56,7 @@ const NewQuestionForm = ({ selectedAreas }) => {
   };
 
   return (
-    <form>
+    <form id="questionForm">
       <div className="form-group">
         <label htmlFor="name">Name</label>
         <input
