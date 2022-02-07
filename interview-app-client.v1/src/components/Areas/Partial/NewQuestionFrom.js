@@ -21,6 +21,9 @@ const NewQuestionForm = ({ selectedAreas }) => {
   const [successMessages, setSuccessMessages] = useState([]);
 
   const handleSuccess = () => {
+    setName('')
+    setComplexity(0)
+    setDescription('')
     document.getElementById('questionForm').reset()
     setSuccessMessages([{ message: "Sucessfully created question!" }]);
     setTimeout(() => {
