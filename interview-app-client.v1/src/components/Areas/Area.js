@@ -5,10 +5,10 @@ import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
-const Area = ({ area, areas }) => {
+const Area = ({ area, areas, checkChange }) => {
   const buildAreasDOM = (areas) => {
     return areas.map((area, key) => {
-      return <Area area={area} key={key} areas={areas} />;
+      return <Area area={area} key={key} checkChange={checkChange} areas={areas} />;
     });
   };
 
@@ -59,8 +59,9 @@ const Area = ({ area, areas }) => {
             style={{ float: "left" }}
             className="form-check-input"
             type="checkbox"
-            value={area.area}
+            value={area.id}
             id={area.name}
+            onChange={checkChange}
           />
         </li>
         <Collapse in={open}>

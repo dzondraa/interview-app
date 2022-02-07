@@ -10,6 +10,20 @@ const Areas = () => {
   const api = Api.getResourceApiInstance();
   const [areas, setAreas] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedAreas, setSelectedAreas] = useState([]);
+
+  const checkChange = (e) => {
+    var selectedArrState = selectedAreas;
+    console.log(selectedArrState);
+    e.target.checked
+      ? selectedArrState.push(e.target.value)
+      : selectedArrState.indexOf(e.target.value) > -1 &&
+        selectedArrState.splice(selectedArrState.indexOf(e.target.value), 1);
+
+    setSelectedAreas((s) => (s = selectedArrState));
+    console.log(selectedAreas);
+  };
+
   useEffect(async () => {
     try {
       const response = await api.get("area");
@@ -35,7 +49,7 @@ const Areas = () => {
             Areas and fields
           </h1>
           <div className="col-lg-6">
-            {areas.length != 0 && <Area id={areas.name} area={areas}></Area>}
+            {areas.length != 0 && <Area area={areas} checkChange={checkChange}></Area>}
             {error && <ErrorBox errors={[{ message: error }]} />}
           </div>
           {areas.length != 0 || error ? null : <LoaderSpin />}
