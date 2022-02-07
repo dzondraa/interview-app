@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Area from "../../components/Areas/Area";
 import AddNewArea from "../../components/Areas/Partial/AddNewArea";
+import NewQuestionForm from "../../components/Areas/Partial/NewQuestionFrom";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
@@ -54,11 +55,11 @@ const Areas = () => {
             >
               Areas and fields
             </h1>
-            <div className="col-lg-4">
+            <div className="col-lg-3">
               <button
                 style={{
                   width: "100px",
-                  marginLeft: '5px'
+                  marginLeft: "5px",
                 }}
                 onClick={deleteAreas}
                 type="button"
@@ -72,7 +73,10 @@ const Areas = () => {
               {error && <ErrorBox errors={[{ message: error }]} />}
               {areas.length != 0 || error ? null : <LoaderSpin />}
             </div>
-            <div className="col-lg-6"></div>
+            <div className="col-lg-6">
+              <h2>Add new question to selected areas</h2>
+              <NewQuestionForm />
+            </div>
           </div>
         </div>
       </div>
