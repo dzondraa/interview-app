@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import ErrorBox from "../../common/ErrorBox/ErrorBox";
 import validator from "validator";
+import ApiFactory from "../../../services/Service";
 
 const NewQuestionForm = ({ selectedAreas }) => {
+  const api = ApiFactory.getResourceApiInstance();
   const Complexity = {
     Low: 1,
     LowToMid: 2,
@@ -16,8 +18,16 @@ const NewQuestionForm = ({ selectedAreas }) => {
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState([]);
 
-  const addNewArea = () => {
-    validate();
+  const addNewArea = async () => {
+    const isValid = validate();
+
+    if (isValid)
+      await api.post("question", {
+        name: name,
+        complexity: complexity,
+        description: description,
+        areas: selectedAreas,
+      });
   };
   const validate = () => {
     var errList = [];
@@ -26,6 +36,7 @@ const NewQuestionForm = ({ selectedAreas }) => {
       errList.push({ message: "Description is required" });
     complexity <= 0 && errList.push({ message: "Select a complexity" });
     setErrors(errList);
+    return !errList.length > 0;
   };
 
   return (
