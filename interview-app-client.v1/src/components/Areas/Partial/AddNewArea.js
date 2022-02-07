@@ -1,9 +1,11 @@
 import { useState } from "react";
+import Api from "../../../services/Service";
 
 const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
   const [addingNew, setAddingNew] = useState(false);
   const [thisArea, setThisArea] = useState(area);
-
+  const api = Api.getResourceApiInstance();
+  console.log(area);
   // Handle events for toggle input field
   const hadnleAddNewClick = () => {
     setAddingNew((an) => (an = true));
@@ -21,13 +23,14 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
 
   const addNewSubarea = async (name) => {
     // retrieve current state
-    const areaState = thisArea;
-    // add new area
-    areaState.subareas.push({
-      id: 123,
+    var areaState = thisArea;
+    const insertedArea = await api.post("Area", {
       name: name,
-      subareas: [],
+      parent: area.id,
     });
+    insertedArea.subareas = [];
+    // patch areas
+    areaState.subareas.push(insertedArea);
     // build dom
     const dom = buildAreasDOM(areaState.subareas);
     // change state
@@ -40,7 +43,7 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
     <div
       onClick={hadnleAddNewClick}
       className="card add-new"
-      style={{ width: "18rem", border: 0, marginLeft: '5px', width: '284px' }}
+      style={{ width: "18rem", border: 0, marginLeft: "5px", width: "284px" }}
     >
       <li
         style={{
@@ -49,8 +52,8 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
           color: "steelblue",
           cursor: "pointer",
           marginLeft: "5px !important",
-          marginTop: '5px',
-          fontWeight: 'bold'
+          marginTop: "5px",
+          fontWeight: "bold",
         }}
         className="list-group-item"
       >

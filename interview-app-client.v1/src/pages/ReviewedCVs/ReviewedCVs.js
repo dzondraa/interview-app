@@ -4,9 +4,9 @@ import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 import SearchDocForm from "../../components/Dashboard/SearchDocForm";
 import "./ReviewedCVs.css";
-import schema from '../../config/entitySchemas/documents'
-;
-
+import schema from "../../config/entitySchemas/documents";
+import searchingGif from "../../assets/images/searchingGif.gif";
+import whatYouLookingForImg from "../../assets/images/whatyoulookingfor.png";
 
 const Questions = () => {
   const [documents, setDocuments] = useState(null);
@@ -18,7 +18,11 @@ const Questions = () => {
     <div className="container-fluid questions-main">
       <div className="row">
         <Sidebar></Sidebar>
-        <div className="col-lg-10">
+        <div className="col-lg-10" style={
+          {
+            textAlign: 'center'
+          }
+        }>
           <h1
             style={{
               marginTop: "15px",
@@ -34,8 +38,19 @@ const Questions = () => {
               setDocuments: setDocuments,
             }}
           />
-          {isSearching ? <LoaderSpin></LoaderSpin> : null}
-          {documents && !isSearching ? <DynamicTable props={{schema: schema, data: documents}}></DynamicTable> : null}
+          {isSearching ? <img src={searchingGif} /> : null}
+          {documents && !isSearching ? (
+            <DynamicTable
+              props={{ schema: schema, data: documents }}
+            ></DynamicTable>
+          ) : (
+            <div>
+            <h2 style={{
+              marginTop: '20px'
+            }}>Let us know.. <br></br> What are you looking for?</h2>
+            <img src={whatYouLookingForImg} height="500px" />
+            </div>
+          )}
         </div>
       </div>
     </div>
