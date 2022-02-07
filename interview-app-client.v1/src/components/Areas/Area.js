@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Collapse } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretRight } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,9 @@ import AddNewArea from "./Partial/AddNewArea";
 const Area = ({ area, areas, checkChange }) => {
   const buildAreasDOM = (areas) => {
     return areas.map((area, key) => {
-      return <Area area={area} key={key} checkChange={checkChange} areas={areas} />;
+      return (
+        <Area area={area} key={key} checkChange={checkChange} areas={areas} />
+      );
     });
   };
 
@@ -19,6 +21,10 @@ const Area = ({ area, areas, checkChange }) => {
   const toggleArea = (e) => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    setSubareas(buildAreasDOM(area.subareas));
+  }, [area]);
 
   var collapsiveArrow = open ? (
     <FontAwesomeIcon

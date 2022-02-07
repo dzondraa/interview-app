@@ -14,14 +14,19 @@ const Areas = () => {
 
   const checkChange = (e) => {
     var selectedArrState = selectedAreas;
-    console.log(selectedArrState);
     e.target.checked
       ? selectedArrState.push(e.target.value)
       : selectedArrState.indexOf(e.target.value) > -1 &&
         selectedArrState.splice(selectedArrState.indexOf(e.target.value), 1);
 
     setSelectedAreas((s) => (s = selectedArrState));
-    console.log(selectedAreas);
+  };
+
+  const deleteAreas = async () => {
+    await api.post("area/batchdelete", selectedAreas);
+    // TODO Avoid non-necessary GET call
+    const areas = await api.get("area");
+    setAreas((a) => (a = areas));
   };
 
   useEffect(async () => {
@@ -39,20 +44,36 @@ const Areas = () => {
       <div className="row">
         <Sidebar></Sidebar>
         <div id="areas-container" className="col-lg-10">
-          <h1
-            style={{
-              marginTop: "15px",
-              textAlign: "center",
-              marginBottom: "25px",
-            }}
-          >
-            Areas and fields
-          </h1>
-          <div className="col-lg-6">
-            {areas.length != 0 && <Area area={areas} checkChange={checkChange}></Area>}
-            {error && <ErrorBox errors={[{ message: error }]} />}
+          <div className="row">
+            <h1
+              style={{
+                marginTop: "15px",
+                textAlign: "center",
+                marginBottom: "25px",
+              }}
+            >
+              Areas and fields
+            </h1>
+            <div className="col-lg-4">
+              {areas.length != 0 && (
+                <Area area={areas} checkChange={checkChange}></Area>
+              )}
+              {error && <ErrorBox errors={[{ message: error }]} />}
+              {areas.length != 0 || error ? null : <LoaderSpin />}
+            </div>
+            <div className="col-lg-6">
+              <button
+                style={{
+                  width: "150px",
+                }}
+                onClick={deleteAreas}
+                type="button"
+                className="btn btn-danger"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-          {areas.length != 0 || error ? null : <LoaderSpin />}
         </div>
       </div>
     </div>
