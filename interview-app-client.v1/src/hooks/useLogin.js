@@ -53,7 +53,7 @@ export default function useLogin() {
   const validateFormData = () => {
     var errors = [];
     !validator.isEmail(email) && errors.push("Not a valid email");
-    // !validator.isStrongPassword(password) && errors.push("Please enter a strong password");
+    !validator.isStrongPassword(password) && errors.push("Please enter a strong password");
     return errors;
   };
 

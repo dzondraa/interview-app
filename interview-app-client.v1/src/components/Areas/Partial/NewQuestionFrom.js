@@ -1,4 +1,8 @@
-const NewQuestionForm = () => {
+import { useEffect, useState } from "react";
+import ErrorBox from "../../common/ErrorBox/ErrorBox";
+import validator from "validator";
+
+const NewQuestionForm = ({ selectedAreas }) => {
   const Complexity = {
     Low: 1,
     LowToMid: 2,
@@ -7,13 +11,29 @@ const NewQuestionForm = () => {
     High: 5,
     VeryHigh: 6,
   };
+  const [name, setName] = useState("");
+  const [complexity, setComplexity] = useState(0);
+  const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState([]);
 
-  console.log(Complexity.High);
+  const addNewArea = () => {
+    validate();
+  };
+  const validate = () => {
+    var errList = [];
+    validator.isEmpty(name) && errList.push({ message: "Name is required" });
+    validator.isEmpty(description) &&
+      errList.push({ message: "Description is required" });
+    complexity <= 0 && errList.push({ message: "Select a complexity" });
+    setErrors(errList);
+  };
+
   return (
     <form>
       <div className="form-group">
         <label htmlFor="name">Name</label>
         <input
+          onChange={(e) => setName((name) => (name = e.target.value))}
           type="text"
           className="form-control"
           id="name"
@@ -22,7 +42,11 @@ const NewQuestionForm = () => {
       </div>
       <div className="form-group">
         <label htmlFor="exampleFormControlSelect1">Complexity</label>
-        <select className="form-control" id="Complexity">
+        <select
+          onChange={(e) => setComplexity((c) => (c = e.target.selectedIndex))}
+          className="form-control"
+          id="Complexity"
+        >
           <option value={0}>Select</option>
           {/* show all the complexity */}
           {Object.keys(Complexity).map((keyName, i) => (
@@ -38,12 +62,20 @@ const NewQuestionForm = () => {
           className="form-control"
           id="Description"
           rows="3"
+          onChange={(e) => setDescription((desc) => (desc = e.target.value))}
           placeholder="Question description"
         ></textarea>
       </div>
-      <button style={{backgroundColor: '#4e73df'}} id="save" type="button" class="btn btn-primary btn-lg btn-block">
+      <button
+        style={{ backgroundColor: "#4e73df" }}
+        id="save"
+        type="button"
+        className="btn btn-primary btn-lg btn-block"
+        onClick={addNewArea}
+      >
         Save
       </button>
+      {errors.length > 0 && <ErrorBox errors={errors} />}
     </form>
   );
 };

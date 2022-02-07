@@ -75,7 +75,7 @@ const Areas = () => {
             </div>
             <div className="col-lg-6">
               <h2>Add new question to selected areas</h2>
-              <NewQuestionForm />
+              <NewQuestionForm selectedAreas={selectedAreas} />
             </div>
           </div>
         </div>
