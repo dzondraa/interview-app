@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DynamicTable from "../../components/common/DynamicTable/DynamicTable";
-import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 import SearchDocForm from "../../components/Dashboard/SearchDocForm";
 import "./ReviewedCVs.css";
@@ -11,8 +10,6 @@ import whatYouLookingForImg from "../../assets/images/whatyoulookingfor.png";
 const Questions = () => {
   const [documents, setDocuments] = useState(null);
   const [isSearching, setIsSearching] = useState(false);
-
-  useEffect(() => {}, []);
 
   return (
     <div className="container-fluid questions-main">

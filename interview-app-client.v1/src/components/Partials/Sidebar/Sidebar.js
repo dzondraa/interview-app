@@ -25,6 +25,10 @@ const Sidebar = () => {
       name: "Candidates",
       href: "/candidates",
     },
+    {
+      name: "Interviews",
+      href: "/interviews",
+    },
   ];
   return (
     <div className="col-lg-2 sidebar-container">
