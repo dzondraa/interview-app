@@ -15,10 +15,24 @@ const InterviewPage = () => {
   useEffect(() => {
     api
       .get("interview", null)
+      .then((response) => ensurePrettyData(response))
       .then((data) => setData(data))
-      .then(r => changeLoading(l => l = !l))
-      .catch((er) => setErrors(er.message));
+      .then((r) => changeLoading((l) => (l = !l)))
+      .catch((er) => setErrors([er]));
   }, []);
+
+  const ensurePrettyData = (response) => {
+    response.data.forEach((element) => {
+      element.skills = skillsToTagDisplay(['C#', "Java", "Cloud"])
+    });
+    return response;
+  };
+
+  const skillsToTagDisplay = (skills) => {
+      return skills.map((skill, key) => {
+          return <button className="btn btn-info" key={key}>{skill}</button>
+      })
+  }
   return (
     <div className="container-fluid questions-main">
       <div className="row">
