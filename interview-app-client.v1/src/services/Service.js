@@ -1,12 +1,16 @@
 import config from "../config/config";
 
 const headers = {
-  "Accept": "application/json",
+  Accept: "application/json",
   "Content-Type": "application/json",
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Request-Method": "*",
   "Access-Control-Request-Headers": "*",
-  "Authorization": `Bearer ${localStorage.getItem('token') ? localStorage.getItem('token').replaceAll('"', '') : null}`
+  Authorization: `Bearer ${
+    localStorage.getItem("token")
+      ? localStorage.getItem("token").replaceAll('"', "")
+      : null
+  }`,
 };
 
 function joinURL(baseUrl, uri) {
@@ -51,12 +55,33 @@ class ApiFactory {
     return fetch(url, options);
   }
 
-  async get(url, id) {
+  abortableRequest(url, method = "POST", data = null, signal) {
+    url = joinURL(this.domain, url);
+    const options = {
+      signal,
+      credentials: "same-origin",
+      headers,
+      method,
+    };
+
+    if (data != null) {
+      options.body = JSON.stringify(data);
+    }
+
+    return fetch(url, options);
+  }
+
+  async get(url, id, abortSignal) {
     const method = "GET";
     if (id) {
       url = `${url}/${id}`;
     }
-    const res = await this.request(url, method).then((res) => res.json());
+
+    const res = abortSignal
+      ? await this.abortableRequest(url, method, null, abortSignal).then(
+          (res) => res.json()
+        )
+      : await this.request(url, method).then((res) => res.json());
     return res;
   }
 
