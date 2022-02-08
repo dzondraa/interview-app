@@ -30,14 +30,17 @@ const Areas = () => {
     setAreas((a) => (a = areas));
   };
 
-  useEffect(async () => {
-    try {
-      const response = await api.get("area");
-      setAreas(response);
-    } catch (er) {
-      console.error(er);
-      setError(er.message);
-    }
+  useEffect(() => {
+    // TODO Cancel request if component unmounted
+    const ac = new AbortController();
+    api
+      .get("area", null, ac.signal)
+      .then((areas) => setAreas(areas))
+      .catch((er) => setError(er.message));
+
+    return () => {
+      ac.abort();
+    };
   }, []);
 
   return (
@@ -66,7 +69,7 @@ const Areas = () => {
                 type="button"
                 className="btn btn-danger"
               >
-                Delete 
+                Delete
               </button>
               {areas.length != 0 && (
                 <Area area={areas} checkChange={checkChange}></Area>
