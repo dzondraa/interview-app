@@ -15,17 +15,30 @@ const InterviewPage = () => {
   const [tags, setFilterTags] = useState([]);
 
   useEffect(() => {
+    getData(tags);
+  }, [tags]);
+
+  const getData = (filter) => {
+    var uri = "inteview";
+    if (filter) uri += buildUriParams(filter);
     api
-      .get("interview", null)
+      .get(uri, null)
       .then((response) => ensurePrettyData(response))
       .then((data) => setData(data))
       .then((r) => changeLoading((l) => (l = false)))
       .catch((er) => setErrors([er]));
-  }, [tags]);
+  };
 
+  const buildUriParams = (filter) => {
+    var str = "?";
+    filter.forEach((f) => {
+      str += `area=${f}&`;
+    });
+    return str;
+  };
   const ensurePrettyData = (response) => {
     response.data.forEach((element) => {
-      element.skills = skillsToTagDisplay(["NET", "C#"]);
+      element.skills = skillsToTagDisplay(["Java", "Node", "Maven"]);
     });
     return response;
   };
@@ -50,17 +63,21 @@ const InterviewPage = () => {
 
   const addTag = (event) => {
     var tag = event.target.value;
-    if (tags.filter((t) => t === tag).length === 0)
-      setFilterTags((t) => (t = tags.concat([tag])));
+    var tagsReplica = [...tags];
+    if (tagsReplica.filter((t) => t === tag).length === 0) {
+      tagsReplica.push(tag);
+      setFilterTags((t) => (t = tagsReplica));
+    }
   };
 
   const deleteTag = (event) => {
     var tag = event.target.value;
     var tagsReplica = [...tags];
     const indexToDelete = tagsReplica.indexOf(tag);
-    if (indexToDelete > -1) tagsReplica.splice(indexToDelete, 1);
-    console.log(tagsReplica);
-    setFilterTags((tags) => (tags = tagsReplica));
+    if (indexToDelete > -1) {
+      tagsReplica.splice(indexToDelete, 1);
+      setFilterTags((tags) => (tags = tagsReplica));
+    }
   };
 
   return (

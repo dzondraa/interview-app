@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const FilterTags = ({ tags, deleteTag }) => {
-  //   const tags = ["java", "C#", "Docker"];
   return (
     <div
       style={{
