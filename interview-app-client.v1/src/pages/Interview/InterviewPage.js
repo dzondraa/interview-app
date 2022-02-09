@@ -12,23 +12,23 @@ const InterviewPage = () => {
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
-  const [filterTags, setFilterTags] = useState(["C#", "Java", "Cloud"]);
+  const [tags, setFilterTags] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setFilterTags(['C#'])
-    }, 3000)
+    // setTimeout(() => {
+    //   addTag(".NET");
+    // }, 3000);
     api
       .get("interview", null)
       .then((response) => ensurePrettyData(response))
       .then((data) => setData(data))
-      .then((r) => changeLoading((l) => (l = !l)))
+      .then((r) => changeLoading((l) => (l = false)))
       .catch((er) => setErrors([er]));
-  }, []);
+  }, [tags]);
 
   const ensurePrettyData = (response) => {
     response.data.forEach((element) => {
-      element.skills = skillsToTagDisplay(filterTags);
+      element.skills = skillsToTagDisplay(["NET", "C#"]);
     });
     return response;
   };
@@ -36,12 +36,27 @@ const InterviewPage = () => {
   const skillsToTagDisplay = (skills) => {
     return skills.map((skill, key) => {
       return (
-        <button className="btn btn-info" key={key}>
+        <button
+          style={{
+            margin: "5px",
+          }}
+          value={skill}
+          onClick={addTag}
+          className="btn btn-info"
+          key={key}
+        >
           {skill}
         </button>
       );
     });
   };
+
+  const addTag = (event) => {
+    var tag = event.target.value;
+    if (tags.filter((t) => t == tag).length == 0)
+    setFilterTags((tags) => tags.concat([tag]));
+  };
+
   return (
     <div className="container-fluid questions-main">
       <div className="row">
@@ -57,7 +72,7 @@ const InterviewPage = () => {
             Interviews
           </h1>
           <div className="col-lg-10">
-            <FilterTags tags={filterTags}></FilterTags>
+            <FilterTags tags={tags}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
             {data != null && (
