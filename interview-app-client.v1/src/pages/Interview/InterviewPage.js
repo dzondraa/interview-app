@@ -21,6 +21,7 @@ const InterviewPage = () => {
   const getData = (filter) => {
     var uri = "inteview";
     if (filter) uri += buildUriParams(filter);
+    changeLoading((l) => (l = true));
     api
       .get(uri, null)
       .then((response) => ensurePrettyData(response))
@@ -39,6 +40,7 @@ const InterviewPage = () => {
   const ensurePrettyData = (response) => {
     response.data.forEach((element) => {
       element.skills = skillsToTagDisplay(["Java", "Node", "Maven"]);
+      element.status = "Planned";
     });
     return response;
   };
@@ -98,7 +100,7 @@ const InterviewPage = () => {
             <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
-            {data != null && (
+            {data != null && !isLoading && (
               <DynamicTable
                 props={{
                   data: data.data,
