@@ -15,9 +15,6 @@ const InterviewPage = () => {
   const [tags, setFilterTags] = useState([]);
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   addTag(".NET");
-    // }, 3000);
     api
       .get("interview", null)
       .then((response) => ensurePrettyData(response))
@@ -53,8 +50,17 @@ const InterviewPage = () => {
 
   const addTag = (event) => {
     var tag = event.target.value;
-    if (tags.filter((t) => t == tag).length == 0)
-    setFilterTags((tags) => tags.concat([tag]));
+    if (tags.filter((t) => t === tag).length === 0)
+      setFilterTags((t) => (t = tags.concat([tag])));
+  };
+
+  const deleteTag = (event) => {
+    var tag = event.target.value;
+    var tagsReplica = [...tags];
+    const indexToDelete = tagsReplica.indexOf(tag);
+    if (indexToDelete > -1) tagsReplica.splice(indexToDelete, 1);
+    console.log(tagsReplica);
+    setFilterTags((tags) => (tags = tagsReplica));
   };
 
   return (
@@ -72,7 +78,7 @@ const InterviewPage = () => {
             Interviews
           </h1>
           <div className="col-lg-10">
-            <FilterTags tags={tags}></FilterTags>
+            <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
             {data != null && (

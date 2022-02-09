@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const FilterTags = ({ tags }) => {
+const FilterTags = ({ tags, deleteTag }) => {
   //   const tags = ["java", "C#", "Docker"];
   return (
     <div
@@ -13,6 +13,8 @@ const FilterTags = ({ tags }) => {
     >
       {tags.map((tag, key) => (
         <button
+          onClick={deleteTag}
+          value={tag}
           style={{ marginLeft: "5px" }}
           key={key}
           type="button"
