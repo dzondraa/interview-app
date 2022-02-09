@@ -8,7 +8,7 @@ import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import FilterTags from "../../components/Dashboard/Tags/FilterTags";
 
 const InterviewPage = () => {
-  const api = Api.getAuthServiceInstance();
+  const api = Api.getResourceApiInstance();
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
@@ -19,7 +19,7 @@ const InterviewPage = () => {
   }, [tags]);
 
   const getData = (filter) => {
-    var uri = "inteview";
+    var uri = "interview";
     if (filter) uri += buildUriParams(filter);
     changeLoading((l) => (l = true));
     api
@@ -31,6 +31,7 @@ const InterviewPage = () => {
   };
 
   const buildUriParams = (filter) => {
+    if(filter.length == 0) return ""
     var str = "?";
     filter.forEach((f) => {
       str += `area=${f}&`;
