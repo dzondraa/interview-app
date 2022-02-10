@@ -15,7 +15,8 @@ const InterviewPage = () => {
   const [isLoading, changeLoading] = useState(true);
   const [tags, setFilterTags] = useState([]);
   const [status, setStatus] = useState("0");
-  const [modalOpen, setModalOpen] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedInterview, seSelectedInterview] = useState(null);
 
   useEffect(() => {
     getData(tags, status);
@@ -98,6 +99,9 @@ const InterviewPage = () => {
 
   const handleRowClick = (e) => {
     const interviewId = e.target.closest(".table-row").getAttribute("data");
+    seSelectedInterview(interviewId)
+    handleShow()
+
   };
 
   return (
@@ -132,11 +136,14 @@ const InterviewPage = () => {
                 </select>
               </div>
             </div>
-            <InterviewModal
-              modalOpen={modalOpen}
-              handleShow={handleShow}
-              handleClose={handleClose}
-            ></InterviewModal>
+            {modalOpen && (
+              <InterviewModal
+                modalOpen={modalOpen}
+                handleShow={handleShow}
+                handleClose={handleClose}
+                selectedInterview={selectedInterview}
+              ></InterviewModal>
+            )}
             <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
