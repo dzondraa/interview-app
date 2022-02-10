@@ -15,6 +15,7 @@ const InterviewPage = () => {
   const [isLoading, changeLoading] = useState(true);
   const [tags, setFilterTags] = useState([]);
   const [status, setStatus] = useState("0");
+  const [modalOpen, setModalOpen] = useState(true);
 
   useEffect(() => {
     getData(tags, status);
@@ -30,6 +31,9 @@ const InterviewPage = () => {
       .then((r) => changeLoading((l) => (l = false)))
       .catch((er) => setErrors([er]));
   };
+
+  const handleShow = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
   const buildUri = () => {
     var uri = "interview?";
@@ -93,8 +97,8 @@ const InterviewPage = () => {
   };
 
   const handleRowClick = (e) => {
-    const interviewId = e.target.closest('.table-row').getAttribute('data')
-  }
+    const interviewId = e.target.closest(".table-row").getAttribute("data");
+  };
 
   return (
     <div className="container-fluid questions-main">
@@ -118,7 +122,7 @@ const InterviewPage = () => {
                   className="form-select form-select mb-3"
                   aria-label=".form-select-lg example"
                 >
-                  <option selected value="0">
+                  <option defaultValue value="0">
                     Filter by status
                   </option>
                   <option>Planned</option>
@@ -128,6 +132,11 @@ const InterviewPage = () => {
                 </select>
               </div>
             </div>
+            <InterviewModal
+              modalOpen={modalOpen}
+              handleShow={handleShow}
+              handleClose={handleClose}
+            ></InterviewModal>
             <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
@@ -136,7 +145,7 @@ const InterviewPage = () => {
                 props={{
                   data: data.data,
                   schema: schema,
-                  handleRowClick
+                  handleRowClick,
                 }}
               ></DynamicTable>
             )}

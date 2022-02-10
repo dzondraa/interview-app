@@ -16,7 +16,6 @@ const CandidatesPage = () => {
     try {
       changeLoading(true);
       var data = await api.get("candidate");
-      console.log(data);
       setData(data);
       changeLoading(false);
     } catch (ex) {

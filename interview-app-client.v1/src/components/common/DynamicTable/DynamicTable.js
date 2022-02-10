@@ -34,7 +34,8 @@ const DynamicTable = ({ props }) => {
           {props.data.map((prop, index) => {
             return (
               <tr className="table-row" onClick={props.handleRowClick} data={prop.id} key={index}>
-                <td scope="row">{prop.id ? prop.id.toString() : 'ToDo'}</td>
+                {/* TODO Handle ObjectID values */}
+                <td scope="row">{prop.id ? String(prop.id) : 'ToDo'}</td>
                 {props.schema.properties.map((propertyName, propertyIndex) => {
                   return (
                     <td key={propertyIndex}>
