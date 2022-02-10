@@ -13,14 +13,17 @@ const InterviewPage = () => {
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
   const [tags, setFilterTags] = useState([]);
+  const [status, setStatus] = useState("0");
 
   useEffect(() => {
-    getData(tags);
-  }, [tags]);
+    getData(tags, status);
+  }, [tags, status]);
 
-  const getData = (filter) => {
-    var uri = "interview";
-    if (filter) uri += buildUriParams(filter);
+  const getData = () => {
+    var uri = "interview?";
+    if (tags.length > 0) uri += buildTagParams(tags);
+    if (status !== "0")
+      uri += tags.length > 0 ? `status=${status}` : `status=${status}`;
     changeLoading((l) => (l = true));
     api
       .get(uri, null)
@@ -30,18 +33,17 @@ const InterviewPage = () => {
       .catch((er) => setErrors([er]));
   };
 
-  const buildUriParams = (filter) => {
-    if(filter.length == 0) return ""
-    var str = "?";
+  const buildTagParams = (filter) => {
+    if (filter.length === 0) return "";
+    var str = "";
     filter.forEach((f) => {
-      str += `area=${f}&`;
+      str += `areas=${f}&`;
     });
     return str;
   };
   const ensurePrettyData = (response) => {
     response.data.forEach((element) => {
-      element.skills = skillsToTagDisplay(["Java", "Node", "Maven"]);
-      element.status = "Planned";
+      element.skills = skillsToTagDisplay(element.skills);
     });
     return response;
   };
@@ -62,6 +64,10 @@ const InterviewPage = () => {
         </button>
       );
     });
+  };
+
+  const changeStatus = (event) => {
+    if (status !== event.target.value.toString()) setStatus(event.target.value);
   };
 
   const addTag = (event) => {
@@ -98,6 +104,23 @@ const InterviewPage = () => {
             Interviews
           </h1>
           <div className="col-lg-10">
+            <div className="row">
+              <div className="col-lg-3">
+                <select
+                  onClick={changeStatus}
+                  className="form-select form-select mb-3"
+                  aria-label=".form-select-lg example"
+                >
+                  <option selected value="0">
+                    Filter by status
+                  </option>
+                  <option>Planned</option>
+                  <option>Canceled</option>
+                  <option>In progress</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+            </div>
             <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
