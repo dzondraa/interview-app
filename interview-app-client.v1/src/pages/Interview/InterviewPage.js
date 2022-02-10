@@ -6,6 +6,7 @@ import schema from "../../config/entitySchemas/interview";
 import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import FilterTags from "../../components/Dashboard/Tags/FilterTags";
+import InterviewModal from "../../components/Dashboard/Modals/InterviewModal";
 
 const InterviewPage = () => {
   const api = Api.getResourceApiInstance();
@@ -39,8 +40,7 @@ const InterviewPage = () => {
       });
       uri += str;
     }
-    if (status !== "0")
-      uri += `status=${status}`;
+    if (status !== "0") uri += `status=${status}`;
 
     return uri;
   };
@@ -92,6 +92,10 @@ const InterviewPage = () => {
     }
   };
 
+  const handleRowClick = (e) => {
+    const interviewId = e.target.closest('.table-row').getAttribute('data')
+  }
+
   return (
     <div className="container-fluid questions-main">
       <div className="row">
@@ -132,6 +136,7 @@ const InterviewPage = () => {
                 props={{
                   data: data.data,
                   schema: schema,
+                  handleRowClick
                 }}
               ></DynamicTable>
             )}
