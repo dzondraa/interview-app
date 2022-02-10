@@ -7,7 +7,7 @@ import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 
 const CandidatesPage = () => {
-  const api = Api.getAuthServiceInstance();
+  const api = Api.getResourceApiInstance();
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
@@ -15,7 +15,7 @@ const CandidatesPage = () => {
   useEffect(async () => {
     try {
       changeLoading(true);
-      var data = await api.get("users");
+      var data = await api.get("candidate");
       setData(data);
       changeLoading(false);
     } catch (ex) {
