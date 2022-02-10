@@ -20,10 +20,7 @@ const InterviewPage = () => {
   }, [tags, status]);
 
   const getData = () => {
-    var uri = "interview?";
-    if (tags.length > 0) uri += buildTagParams(tags);
-    if (status !== "0")
-      uri += tags.length > 0 ? `status=${status}` : `status=${status}`;
+    const uri = buildUri();
     changeLoading((l) => (l = true));
     api
       .get(uri, null)
@@ -33,13 +30,19 @@ const InterviewPage = () => {
       .catch((er) => setErrors([er]));
   };
 
-  const buildTagParams = (filter) => {
-    if (filter.length === 0) return "";
-    var str = "";
-    filter.forEach((f) => {
-      str += `areas=${f}&`;
-    });
-    return str;
+  const buildUri = () => {
+    var uri = "interview?";
+    if (tags.length > 0) {
+      var str = "";
+      tags.forEach((f) => {
+        str += `areas=${f}&`;
+      });
+      uri += str;
+    }
+    if (status !== "0")
+      uri += `status=${status}`;
+
+    return uri;
   };
   const ensurePrettyData = (response) => {
     response.data.forEach((element) => {
