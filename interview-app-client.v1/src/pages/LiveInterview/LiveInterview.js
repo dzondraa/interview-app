@@ -8,6 +8,8 @@ const LiveInterview = () => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [answer, setAnswer] = useState("");
+  const [info, setInfo] = useState(null);
   const interviewId = window.location.search.split("=")[1];
   const api = ApiFactory.getResourceApiInstance();
 
@@ -44,6 +46,32 @@ const LiveInterview = () => {
     );
   });
 
+  const answerUpdate = () => {
+    // const answer = document.getElementById("answer").value;
+    var tempAnswers = [...answers];
+    tempAnswers = answers;
+    tempAnswers[currentQuestion].answer = answer;
+    console.log(tempAnswers);
+    setAnswers((a) => (a = tempAnswers));
+    socket.emit("answerUpdate", { answers }, (res) => {
+      handleInfo(res);
+    });
+  };
+
+  const handleInfo = (info) => {
+    var display =
+      info.type == "Error" ? (
+        <span className="badge badge-pill badge-danger">{info.message}</span>
+      ) : (
+        <span className="badge badge-pill badge-success">{info.message}</span>
+      );
+
+    setInfo(display);
+    setTimeout(() => {
+      setInfo(null);
+    }, 3000);
+  };
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-center row">
@@ -59,13 +87,15 @@ const LiveInterview = () => {
             </div>
             <div className="question bg-white p-3 border-bottom">
               <div className="d-flex flex-row align-items-center question-title">
-                <h3 className="text-danger">Q.</h3>
+                <h3 className="text-danger">Q. </h3>
                 <h5 className="mt-1 ml-2">
                   {questions.length > 0 &&
                     questions[currentQuestion].description}
+                  {info ? info : null}
                 </h5>
               </div>
               <textarea
+                onChange={(e) => setAnswer(e.target.value)}
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
@@ -84,7 +114,7 @@ const LiveInterview = () => {
               </button>
 
               <button
-                onClick={() => {}}
+                onClick={answerUpdate}
                 className="btn btn-primary d-flex align-items-center btn-information"
                 type="button"
               >
