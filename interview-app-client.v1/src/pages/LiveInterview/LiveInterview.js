@@ -12,17 +12,22 @@ const LiveInterview = () => {
   const api = ApiFactory.getResourceApiInstance();
 
   const ENDPOINT = "http://localhost:5000";
-
   useEffect(() => {
-    api.get("interview", interviewId).then((r) => {
-      setQuestions((q) => (q = r[0].questions));
-      setCurrentQuestion(0);
-      return r;
-    });
-    socket = io(ENDPOINT);
+    api
+      .get("interview", interviewId)
+      .then((r) => {
+        setQuestions((q) => (q = r[0].questions));
+        setCurrentQuestion(0);
+        setAnswers((a) => (a = r[0].questions));
+      })
+      .catch((er) => {
+        console.log(er);
+      });
 
+    socket = io(ENDPOINT);
     socket.emit("connection", { interview: interviewId }, () => {});
     socket.emit("interviewStart", { interviewId: interviewId }, () => {});
+
     // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
@@ -46,7 +51,7 @@ const LiveInterview = () => {
           <div className="border">
             <div className="question bg-white p-3 border-bottom">
               <div className="d-flex flex-row justify-content-between align-items-center mcq">
-                <h4>Interview</h4>
+                <h4>InterviewID {interviewId}</h4>
                 <span>
                   ({currentQuestion + 1} of {questions.length})
                 </span>
@@ -68,16 +73,32 @@ const LiveInterview = () => {
             </div>
             <div className="d-flex flex-row justify-content-between align-items-center p-3 bg-white">
               <button
+                onClick={() => {
+                  if (currentQuestion - 1 >= 0)
+                    setCurrentQuestion((e) => (e = e - 1));
+                }}
                 className="btn btn-primary d-flex align-items-center btn-danger"
                 type="button"
               >
-                <i className="fa fa-angle-left mt-1 mr-1"></i>&nbsp;previous
+                previous
+              </button>
+
+              <button
+                onClick={() => {}}
+                className="btn btn-primary d-flex align-items-center btn-information"
+                type="button"
+              >
+                Save answers
               </button>
               <button
+                onClick={() => {
+                  if (questions.length > currentQuestion + 1)
+                    setCurrentQuestion((e) => (e = e + 1));
+                }}
                 className="btn btn-primary border-success align-items-center btn-success"
                 type="button"
               >
-                Next<i className="fa fa-angle-right ml-2"></i>
+                Next
               </button>
             </div>
           </div>
