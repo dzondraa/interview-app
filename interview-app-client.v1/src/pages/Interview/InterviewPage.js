@@ -101,7 +101,7 @@ const InterviewPage = () => {
 
   const handleRowClick = (e) => {
     const interviewId = e.target.closest(".table-row").getAttribute("data");
-    console.log(e.target.element);
+    if (e.target.nodeName == "BUTTON") return;
     seSelectedInterview(interviewId);
     handleShow();
   };
