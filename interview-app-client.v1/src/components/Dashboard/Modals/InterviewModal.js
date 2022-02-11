@@ -8,26 +8,30 @@ const InterviewModal = ({
   selectedInterview,
 }) => {
   const api = ApiFactory.getResourceApiInstance();
-  const [interview, setInterview] = useState(null);
+  const [interviewDetails, setInterviewDetails] = useState(null);
 
   useEffect(() => {
     api
       .get("interview", selectedInterview)
-      .then((res) => setInterview(res[0]))
+      .then((res) => setInterviewDetails(res[0]))
       .catch((ex) => console.log(ex));
   }, []);
-  return interview ? (
+
+  const startInterview = () => {
+    window.location.href = `live?interview=${interviewDetails.interview.id}`
+  }
+  return interviewDetails ? (
     <Modal show={modalOpen} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Interview details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <b>Date</b> {new Date(interview.interview.date).toDateString()}
+        <b>Date</b> {new Date(interviewDetails.interview.date).toDateString()}
         <br />
-        <b>Time</b> {new Date(interview.interview.date).toTimeString()}
+        <b>Time</b> {new Date(interviewDetails.interview.date).toTimeString()}
         <br></br>
         <b>Questions:</b>
-        {interview.questions.map((question, key) => {
+        {interviewDetails.questions.map((question, key) => {
           return <p key={key}>{question.description}</p>;
         })}
       </Modal.Body>
@@ -35,8 +39,8 @@ const InterviewModal = ({
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        {interview.interview.status == "Planned" && (
-          <Button variant="primary" onClick={handleClose}>
+        {interviewDetails.interview.status == "Planned" && (
+          <Button variant="primary" onClick={startInterview}>
             Start interview
           </Button>
         )}
