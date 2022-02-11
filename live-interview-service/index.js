@@ -20,7 +20,8 @@ io.on("connection", (socket) => {
   console.log("New connection!");
 
   socket.on("interviewStart", ({ interviewId }, callback) => {
-    const { error, user } = addUser({ id: socket.id, name, room });
+   
+    console.log("NEW USER");
 
     if (error) return callback(error);
 
@@ -37,12 +38,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    const user = removeUser(socket.id)
+    console.log("Candidate disconnected from the interview!")
+    // const user = removeUser(socket.id)
 
-    if(user) {
-        io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left!`})
+    // if(user) {
+        // io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left!`})
     }
-  });
+  );
 });
 
 server.listen(PORT, () => console.log(`Server started on ${PORT}`));

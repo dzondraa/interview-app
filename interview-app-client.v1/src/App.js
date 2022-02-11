@@ -6,6 +6,7 @@ import ReviewedCVs from "./pages/ReviewedCVs/ReviewedCVs";
 import useToken from "./hooks/useToken";
 import CandidatesPage from "./pages/Candidates/CandidatesPage";
 import InterviewPage from "./pages/Interview/InterviewPage";
+import LiveInterview from "./pages/LiveInterview/LiveInterview";
 
 
 function App(props) {
@@ -31,6 +32,7 @@ function App(props) {
             <Route path="/areas" element={<Areas />} />
             <Route path="/candidates" element={<CandidatesPage />} />
             <Route path="/interviews" element={<InterviewPage />} />
+            <Route path="/live" element={<LiveInterview />} />
           </Routes>
         </Router>
       </div>
