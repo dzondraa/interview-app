@@ -6,7 +6,7 @@ let socket;
 
 const LiveInterview = () => {
   const [questions, setQuestions] = useState([]);
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const interviewId = window.location.search.split("=")[1];
   const api = ApiFactory.getResourceApiInstance();
@@ -16,13 +16,14 @@ const LiveInterview = () => {
   useEffect(() => {
     api.get("interview", interviewId).then((r) => {
       setQuestions((q) => (q = r[0].questions));
-      setCurrentQuestion(r[0].questions[0]);
+      setCurrentQuestion(0);
       return r;
     });
     socket = io(ENDPOINT);
 
-    socket.emit("connection", { candidate: "Candidate 1" }, () => {});
-    console.log(questions);
+    socket.emit("connection", { interview: interviewId }, () => {});
+    socket.emit("interviewStart", { interviewId: interviewId }, () => {});
+    // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
     };
@@ -45,15 +46,18 @@ const LiveInterview = () => {
           <div className="border">
             <div className="question bg-white p-3 border-bottom">
               <div className="d-flex flex-row justify-content-between align-items-center mcq">
-                <h4>MCQ Quiz</h4>
-                <span>(5 of 20)</span>
+                <h4>Interview</h4>
+                <span>
+                  ({currentQuestion + 1} of {questions.length})
+                </span>
               </div>
             </div>
             <div className="question bg-white p-3 border-bottom">
               <div className="d-flex flex-row align-items-center question-title">
                 <h3 className="text-danger">Q.</h3>
                 <h5 className="mt-1 ml-2">
-                  {currentQuestion ? currentQuestion.name : "ZEaRO"}
+                  {questions.length > 0 &&
+                    questions[currentQuestion].description}
                 </h5>
               </div>
               <textarea
