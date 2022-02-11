@@ -29,8 +29,10 @@ const InterviewPage = () => {
       .get(uri, null)
       .then((response) => ensurePrettyData(response))
       .then((data) => setData(data))
-      .then((r) => changeLoading((l) => (l = false)))
-      .catch((er) => setErrors([er]));
+      .catch((er) => setErrors([er]))
+      .finally(() => {
+        changeLoading((l) => (l = false));
+      });
   };
 
   const handleShow = () => setModalOpen(true);
@@ -99,9 +101,9 @@ const InterviewPage = () => {
 
   const handleRowClick = (e) => {
     const interviewId = e.target.closest(".table-row").getAttribute("data");
-    seSelectedInterview(interviewId)
-    handleShow()
-
+    console.log(e.target.element);
+    seSelectedInterview(interviewId);
+    handleShow();
   };
 
   return (
