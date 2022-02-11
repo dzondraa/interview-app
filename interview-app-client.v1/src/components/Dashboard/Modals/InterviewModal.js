@@ -35,10 +35,11 @@ const InterviewModal = ({
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleClose}>
-          {" "}
-          Start interview{" "}
-        </Button>
+        {interview.interview.status == "Planned" && (
+          <Button variant="primary" onClick={handleClose}>
+            Start interview
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   ) : null;
