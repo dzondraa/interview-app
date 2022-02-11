@@ -5,7 +5,6 @@ const AddNewArea = ({ area, setSubareas, buildAreasDOM }) => {
   const [addingNew, setAddingNew] = useState(false);
   const [thisArea, setThisArea] = useState(area);
   const api = Api.getResourceApiInstance();
-  console.log(area);
   // Handle events for toggle input field
   const hadnleAddNewClick = () => {
     setAddingNew((an) => (an = true));

@@ -6,6 +6,7 @@ import schema from "../../config/entitySchemas/interview";
 import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import FilterTags from "../../components/Dashboard/Tags/FilterTags";
+import InterviewModal from "../../components/Dashboard/Modals/InterviewModal";
 
 const InterviewPage = () => {
   const api = Api.getResourceApiInstance();
@@ -14,6 +15,8 @@ const InterviewPage = () => {
   const [isLoading, changeLoading] = useState(true);
   const [tags, setFilterTags] = useState([]);
   const [status, setStatus] = useState("0");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedInterview, seSelectedInterview] = useState(null);
 
   useEffect(() => {
     getData(tags, status);
@@ -26,9 +29,14 @@ const InterviewPage = () => {
       .get(uri, null)
       .then((response) => ensurePrettyData(response))
       .then((data) => setData(data))
-      .then((r) => changeLoading((l) => (l = false)))
-      .catch((er) => setErrors([er]));
+      .catch((er) => setErrors([er]))
+      .finally(() => {
+        changeLoading((l) => (l = false));
+      });
   };
+
+  const handleShow = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
   const buildUri = () => {
     var uri = "interview?";
@@ -39,8 +47,7 @@ const InterviewPage = () => {
       });
       uri += str;
     }
-    if (status !== "0")
-      uri += `status=${status}`;
+    if (status !== "0") uri += `status=${status}`;
 
     return uri;
   };
@@ -92,6 +99,13 @@ const InterviewPage = () => {
     }
   };
 
+  const handleRowClick = (e) => {
+    const interviewId = e.target.closest(".table-row").getAttribute("data");
+    if (e.target.nodeName == "BUTTON") return;
+    seSelectedInterview(interviewId);
+    handleShow();
+  };
+
   return (
     <div className="container-fluid questions-main">
       <div className="row">
@@ -114,7 +128,7 @@ const InterviewPage = () => {
                   className="form-select form-select mb-3"
                   aria-label=".form-select-lg example"
                 >
-                  <option selected value="0">
+                  <option defaultValue value="0">
                     Filter by status
                   </option>
                   <option>Planned</option>
@@ -124,6 +138,14 @@ const InterviewPage = () => {
                 </select>
               </div>
             </div>
+            {modalOpen && (
+              <InterviewModal
+                modalOpen={modalOpen}
+                handleShow={handleShow}
+                handleClose={handleClose}
+                selectedInterview={selectedInterview}
+              ></InterviewModal>
+            )}
             <FilterTags tags={tags} deleteTag={deleteTag}></FilterTags>
             {isLoading && <LoaderSpin></LoaderSpin>}
             {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
@@ -132,6 +154,7 @@ const InterviewPage = () => {
                 props={{
                   data: data.data,
                   schema: schema,
+                  handleRowClick,
                 }}
               ></DynamicTable>
             )}
