@@ -132,6 +132,16 @@ const LiveInterview = () => {
               </button>
             </div>
           </div>
+          <button
+            style={{
+              float: "right",
+              marginTop: '15px'
+            }}
+            type="button"
+            className="btn btn-outline-success btn-lg"
+          >
+            End interview
+          </button>
         </div>
       </div>
     </div>
