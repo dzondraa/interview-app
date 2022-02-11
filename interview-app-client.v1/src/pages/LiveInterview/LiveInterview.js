@@ -1,21 +1,32 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
+import ApiFactory from "../../services/Service";
 
 let socket;
 
 const LiveInterview = () => {
   const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [answers, setAnswers] = useState([]);
+  const interviewId = window.location.search.split("=")[1];
+  const api = ApiFactory.getResourceApiInstance();
+
   const ENDPOINT = "http://localhost:5000";
 
   useEffect(() => {
+    api.get("interview", interviewId).then((r) => {
+      setQuestions((q) => (q = r[0].questions));
+      setCurrentQuestion(r[0].questions[0]);
+      return r;
+    });
     socket = io(ENDPOINT);
 
     socket.emit("connection", { candidate: "Candidate 1" }, () => {});
-
+    console.log(questions);
     return () => {
       socket.off();
     };
-  }, [ENDPOINT, window.location.search]);
+  }, []);
 
   useEffect(() => {
     socket.on(
@@ -42,7 +53,7 @@ const LiveInterview = () => {
               <div className="d-flex flex-row align-items-center question-title">
                 <h3 className="text-danger">Q.</h3>
                 <h5 className="mt-1 ml-2">
-                  Which of the following country has largest population?
+                  {currentQuestion ? currentQuestion.name : "ZEaRO"}
                 </h5>
               </div>
               <textarea
