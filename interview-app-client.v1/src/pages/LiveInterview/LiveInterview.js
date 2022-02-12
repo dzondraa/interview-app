@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import ApiFactory from "../../services/Service";
+import useToken from "../../hooks/useToken";
+import ROLES from "../../config/roles";
 
 let socket;
 
 const LiveInterview = () => {
+  const interviewId = window.location.search.split("=")[1];
+  const api = ApiFactory.getResourceApiInstance();
+  const tokenService = useToken();
+  const user = tokenService.getLoggedInUser();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [answer, setAnswer] = useState("");
   const [info, setInfo] = useState(null);
-  const interviewId = window.location.search.split("=")[1];
-  const api = ApiFactory.getResourceApiInstance();
 
   const ENDPOINT = "http://localhost:5000";
   useEffect(() => {
@@ -72,7 +76,7 @@ const LiveInterview = () => {
     }, 3000);
   };
 
-  return (
+  return user.role !== ROLES.INTERVIEWER ? (
     <div className="container mt-5">
       <div className="d-flex justify-content-center row">
         <div className="col-md-10 col-lg-10">
@@ -135,7 +139,7 @@ const LiveInterview = () => {
           <button
             style={{
               float: "right",
-              marginTop: '15px'
+              marginTop: "15px",
             }}
             type="button"
             className="btn btn-outline-success btn-lg"
@@ -143,6 +147,36 @@ const LiveInterview = () => {
             End interview
           </button>
         </div>
+      </div>
+    </div>
+  ) : (
+    <div
+      style={{
+        marginTop: "50px",
+      }}
+      className="container"
+    >
+      <div className="list-group">
+        {answers.map((question, key) => {
+          return (
+            <>
+              <a
+                href="#"
+                key={key}
+                className="list-group-item list-group-item-action"
+              >
+                {question.description}
+              </a>
+              <a
+                href="#"
+                key={key}
+                className="list-group-item list-group-item-action"
+              >
+                {question.answer ? question.answer : "Waiting on candidate..."}
+              </a>
+            </>
+          );
+        })}
       </div>
     </div>
   );
