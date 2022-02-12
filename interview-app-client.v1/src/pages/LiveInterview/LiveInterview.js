@@ -32,8 +32,9 @@ const LiveInterview = () => {
       });
 
     socket = io(ENDPOINT);
-    socket.emit("connection", { interview: interviewId }, () => {});
-    socket.emit("interviewStart", { interviewId: interviewId }, () => {});
+    console.log("INT ID:",interviewId);
+    socket.emit("connection", { interviewId }, () => {});
+    socket.emit("interviewStart", { interviewId }, () => {});
     socket.on(
       "recievedAnwer",
       (answers) => {
@@ -56,7 +57,7 @@ const LiveInterview = () => {
     tempAnswers = answers;
     tempAnswers[currentQuestion].answer = answer;
     setAnswers((a) => (a = tempAnswers));
-    socket.emit("answerUpdate", { answers }, (res) => {
+    socket.emit("answerUpdate", { answers, interviewId }, (res) => {
       handleInfo(res);
     });
   };

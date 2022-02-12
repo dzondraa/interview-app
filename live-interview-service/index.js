@@ -18,14 +18,14 @@ const io = require("socket.io")(server, {
 
 io.on("connection", (socket) => {
   socket.on("interviewStart", ({ interviewId }, callback) => {
-    socket.join("interviewId");
+    socket.join(interviewId);
 
     callback();
   });
 
-  socket.on("answerUpdate", ({ answers }, callback) => {
-    socket.broadcast.to("interviewId").emit("recievedAnwer", answers);
-    socket.join("interviewId");
+  socket.on("answerUpdate", ({ answers, interviewId }, callback) => {
+    socket.broadcast.to(interviewId).emit("recievedAnwer", answers);
+    socket.join(interviewId);
 
     callback({ type: "Info", message: "Answer saved!" });
   });
