@@ -23,17 +23,53 @@ function App(props) {
       <div className="container-fluid">
         <Router>
           <Routes>
-            <Route exact path="/" element={<Questions />} />
+            <Route
+              exact
+              path="/"
+              element={
+                <RequireAuth>
+                  <InterviewPage />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/login"
               setToken={tokenService.setToken}
               element={<LoginPage />}
             />
             <Route path="/questions" element={<Questions />} />
-            <Route path="/reviewed" element={<ReviewedCVs />} />
-            <Route path="/areas" element={<Areas />} />
-            <Route path="/candidates" element={<CandidatesPage />} />
-            <Route path="/interviews" element={<InterviewPage />} />
+            <Route
+              path="/reviewed"
+              element={
+                <RequireAuth>
+                  <ReviewedCVs />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/areas"
+              element={
+                <RequireAuth>
+                  <Areas />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/candidates"
+              element={
+                <RequireAuth>
+                  <CandidatesPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/interviews"
+              element={
+                <RequireAuth>
+                  <InterviewPage />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/live"
               element={
