@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("answerUpdate", ({ answers }, callback) => {
-    socket.broadcast.to("interviewId").emit("saveAnswers", answers);
+    socket.broadcast.to("interviewId").emit("recievedAnwer", answers);
     socket.join("interviewId");
 
     callback({ type: "Info", message: "Answer saved!" });

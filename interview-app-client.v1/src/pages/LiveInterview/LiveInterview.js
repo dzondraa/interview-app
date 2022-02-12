@@ -34,25 +34,21 @@ const LiveInterview = () => {
     socket = io(ENDPOINT);
     socket.emit("connection", { interview: interviewId }, () => {});
     socket.emit("interviewStart", { interviewId: interviewId }, () => {});
+    socket.on(
+      "recievedAnwer",
+      (answers) => {
+        console.log("Question update");
+        setAnswers(answers);
+      },
+      []
+    );
     // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
     };
   }, []);
 
-  useEffect(() => {
-    socket.on(
-      "saveAnswers",
-      (answers) => {
-        setAnswers(answers);
-      },
-      []
-    );
-
-    socket.on("answerRecieved", (answers) => {
-      setAnswers((a) => (a = answers));
-    });
-  });
+  useEffect(() => {});
 
   const answerUpdate = () => {
     // const answer = document.getElementById("answer").value;
@@ -164,7 +160,7 @@ const LiveInterview = () => {
           return (
             <div key={key}>
               <a href="#" className="list-group-item list-group-item-action">
-                {question.description}
+                <b>{question.description}</b>
               </a>
               <a href="#" className="list-group-item list-group-item-action">
                 {question.answer ? (
