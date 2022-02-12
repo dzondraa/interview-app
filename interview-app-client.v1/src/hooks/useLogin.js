@@ -63,7 +63,7 @@ export default function useLogin() {
   } 
 
   const redirect = () => {
-    window.location.href = "questions";
+    window.location.href = "interviews";
   };
 
   return {
