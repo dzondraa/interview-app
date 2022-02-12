@@ -33,9 +33,11 @@ const LiveInterview = () => {
       });
     checkAuth();
 
+    // Init socket, emit starting event and add listeners
     socket = io(config.LIVE_INTERVIEW_SERVICE);
     socket.emit("connection", { interviewId }, () => {});
     socket.emit("interviewStart", { interviewId }, () => {});
+    updateInterviewStatus('In progress');
     socket.on(
       "recievedAnwer",
       (answers) => {
@@ -43,7 +45,6 @@ const LiveInterview = () => {
       },
       []
     );
-    // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
     };
@@ -86,6 +87,15 @@ const LiveInterview = () => {
       setInfo(null);
     }, 3000);
   };
+
+  const updateInterviewStatus = async (status) => {
+    await api.patch(`interview/${interviewId}`, { Status: status });
+  };
+
+  const endInterview = () => {
+    updateInterviewStatus('Completed')
+    window.location.href = 'interviews'
+  }
 
   return user.role !== ROLES.INTERVIEWER ? (
     <div className="container mt-5">
@@ -148,6 +158,7 @@ const LiveInterview = () => {
             </div>
           </div>
           <button
+          onClick={endInterview}
             style={{
               float: "right",
               marginTop: "15px",

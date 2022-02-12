@@ -18,8 +18,8 @@ const InterviewModal = ({
   }, []);
 
   const startInterview = () => {
-    window.location.href = `live?interview=${interviewDetails.interview.id}`
-  }
+    window.location.href = `live?interview=${interviewDetails.interview.id}`;
+  };
   return interviewDetails ? (
     <Modal show={modalOpen} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -39,11 +39,12 @@ const InterviewModal = ({
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        {interviewDetails.interview.status == "Planned" && (
+        {interviewDetails.interview.status == "Planned" ||
+        interviewDetails.interview.status == "In progress" ? (
           <Button variant="primary" onClick={startInterview}>
-            Start interview
+            {interviewDetails.interview.status == "Planned" ? 'Start interview' : 'Join interview'}
           </Button>
-        )}
+        ) : null}
       </Modal.Footer>
     </Modal>
   ) : null;

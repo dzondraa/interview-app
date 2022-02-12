@@ -97,6 +97,13 @@ class ApiFactory {
     return res;
   }
 
+  async patch(url, data) {
+    const fullURL = joinURL(this.domain, data);
+    const method = "PATCH";
+    const res = await this.request(url, method, data);
+    return res;
+  }
+
   handleStatusCode(statusCode) {
     if (statusCode == 401) {
       localStorage.clear();
