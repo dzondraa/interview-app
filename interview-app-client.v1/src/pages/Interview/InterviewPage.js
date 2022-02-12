@@ -3,13 +3,17 @@ import Sidebar from "../../components/Partials/Sidebar/Sidebar";
 import Api from "../../services/Service";
 import { useEffect, useState } from "react";
 import schema from "../../config/entitySchemas/interview";
+import schemaCandidate from "../../config/entitySchemas/interviewCandidate";
 import LoaderSpin from "../../components/common/Loaders/LoaderSpin";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import FilterTags from "../../components/Dashboard/Tags/FilterTags";
 import InterviewModal from "../../components/Dashboard/Modals/InterviewModal";
+import useToken from "../../hooks/useToken";
 
 const InterviewPage = () => {
   const api = Api.getResourceApiInstance();
+  const tokenService = useToken();
+  const user = tokenService.getLoggedInUser();
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
@@ -19,9 +23,18 @@ const InterviewPage = () => {
   const [selectedInterview, seSelectedInterview] = useState(null);
 
   useEffect(() => {
-    getData(tags, status);
+    user.role == "interviewer" ? getData(tags, status) : getCandidateData();
   }, [tags, status]);
-
+  const getCandidateData = () => {
+    api
+      .get(`interview?candidate=${user.user.profileObj.email}`, null)
+      .then((response) => ensurePrettyData(response))
+      .then((data) => setData(data))
+      .catch((er) => setErrors([er]))
+      .finally(() => {
+        changeLoading((l) => (l = false));
+      });
+  };
   const getData = () => {
     const uri = buildUri();
     changeLoading((l) => (l = true));
@@ -37,7 +50,6 @@ const InterviewPage = () => {
 
   const handleShow = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
-
   const buildUri = () => {
     var uri = "interview?";
     if (tags.length > 0) {
@@ -57,7 +69,6 @@ const InterviewPage = () => {
     });
     return response;
   };
-
   const skillsToTagDisplay = (skills) => {
     return skills.map((skill, key) => {
       return (
@@ -75,11 +86,9 @@ const InterviewPage = () => {
       );
     });
   };
-
   const changeStatus = (event) => {
     if (status !== event.target.value.toString()) setStatus(event.target.value);
   };
-
   const addTag = (event) => {
     var tag = event.target.value;
     var tagsReplica = [...tags];
@@ -88,7 +97,6 @@ const InterviewPage = () => {
       setFilterTags((t) => (t = tagsReplica));
     }
   };
-
   const deleteTag = (event) => {
     var tag = event.target.value;
     var tagsReplica = [...tags];
@@ -98,7 +106,6 @@ const InterviewPage = () => {
       setFilterTags((tags) => (tags = tagsReplica));
     }
   };
-
   const handleRowClick = (e) => {
     const interviewId = e.target.closest(".table-row").getAttribute("data");
     if (e.target.nodeName == "BUTTON") return;
@@ -153,7 +160,7 @@ const InterviewPage = () => {
               <DynamicTable
                 props={{
                   data: data.data,
-                  schema: schema,
+                  schema: user.role == "interviewer" ? schema : schemaCandidate,
                   handleRowClick,
                 }}
               ></DynamicTable>

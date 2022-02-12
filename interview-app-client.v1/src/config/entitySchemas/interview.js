@@ -1,6 +1,3 @@
-const schema = {
-    properties: ["name", "skills", "status"],
-  };
-  
-  export default schema;
-  
+export default {
+  properties: ["name", "skills", "status"],
+};
