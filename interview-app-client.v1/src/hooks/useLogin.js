@@ -63,7 +63,7 @@ export default function useLogin() {
       localStorage.setItem("user", JSON.stringify(payload));
       localStorage.setItem(
         "role",
-        payload.profileObj.email == config.ADMIN ? "interviewer" : "candidate"
+        payload.profileObj.email == config.INTERVIEWER ? "interviewer" : "candidate"
       );
       setToken(payload.tokenId);
     } else alert("Something went wrong with Google auth!");

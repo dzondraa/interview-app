@@ -6,7 +6,7 @@ const config = {
       ? "https://localhost:2222/api"
       : "https://localhost:5001/api",
   FILE_REPOSITORY: "C:\\Users\\v-dnikolic\\Desktop\\Private\\ReviewedCVs",
-  ADMIN: "djole.nic@gmail.com",
+  INTERVIEWER: "djole.nic@gmail.com",
   routerProtection: {
     interviewer: ["live", "interviews", "reviewed", "areas", "candidates"],
     candidate: ["live", "interviews"],

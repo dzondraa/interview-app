@@ -14,6 +14,7 @@ const Sidebar = () => {
   };
 
   const userRole = tokenService.getLoggedInUser().role;
+  console.log(userRole, "ROLE");
   const navigation = config.navigation.filter((item) =>
     config.routerProtection[userRole].includes(item.href)
   );
