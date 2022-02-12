@@ -24,7 +24,6 @@ const RequireAuth = ({ children }) => {
         ).length > 0
       );
   };
-  console.log("ROUTE: " + targetRoute);
   return checkAuth() ? children : <Navigate to="/login" replace />;
 };
 

@@ -12,7 +12,6 @@ import RequireAuth from "./hooks/requireAuth";
 function App(props) {
   const tokenService = useToken();
   const user = tokenService.getLoggedInUser();
-  console.log(user, "USER");
 
   if (!tokenService.getToken()) {
     return <LoginPage setToken={tokenService.setToken} />;

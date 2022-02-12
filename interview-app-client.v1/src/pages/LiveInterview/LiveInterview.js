@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import ApiFactory from "../../services/Service";
 import useToken from "../../hooks/useToken";
 import ROLES from "../../config/roles";
+import config from "../../config/config";
 import "./LiveInterview.css";
 
 let socket;
@@ -18,11 +19,11 @@ const LiveInterview = () => {
   const [answer, setAnswer] = useState("");
   const [info, setInfo] = useState(null);
 
-  const ENDPOINT = "http://localhost:5000";
   useEffect(() => {
     api
       .get("interview", interviewId)
       .then((r) => {
+        checkAuth(r[0]);
         setQuestions((q) => (q = r[0].questions));
         setCurrentQuestion(0);
         setAnswers((a) => (a = r[0].questions));
@@ -30,15 +31,14 @@ const LiveInterview = () => {
       .catch((er) => {
         console.log(er);
       });
+    checkAuth();
 
-    socket = io(ENDPOINT);
-    console.log("INT ID:",interviewId);
+    socket = io(config.LIVE_INTERVIEW_SERVICE);
     socket.emit("connection", { interviewId }, () => {});
     socket.emit("interviewStart", { interviewId }, () => {});
     socket.on(
       "recievedAnwer",
       (answers) => {
-        console.log("Question update");
         setAnswers(answers);
       },
       []
@@ -49,7 +49,13 @@ const LiveInterview = () => {
     };
   }, []);
 
-  useEffect(() => {});
+  const checkAuth = (interview = null) => {
+    if(interview === null) return
+    const email = user.user.profileObj.email;
+    const isAuthorized =
+      email == config.INTERVIEWER || email == interview.interview.candidate;
+    // window.location.href = 'interviews'
+  };
 
   const answerUpdate = () => {
     // const answer = document.getElementById("answer").value;
