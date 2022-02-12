@@ -25,27 +25,30 @@ const InterviewPage = () => {
   useEffect(() => {
     user.role == "interviewer" ? getData(tags, status) : getCandidateData();
   }, [tags, status]);
-  const getCandidateData = () => {
-    api
-      .get(`interview?candidate=${user.user.profileObj.email}`, null)
-      .then((response) => ensurePrettyData(response))
-      .then((data) => setData(data))
-      .catch((er) => setErrors([er]))
-      .finally(() => {
-        changeLoading((l) => (l = false));
-      });
+
+  const getCandidateData = async () => {
+    try {
+      const data = await api.get(
+        `interview?candidate=${user.user.profileObj.email}`,
+        null
+      );
+      setData(data);
+    } catch (ex) {
+      setErrors([ex]);
+    } finally {
+      changeLoading((l) => (l = false));
+    }
   };
-  const getData = () => {
+  const getData = async () => {
     const uri = buildUri();
-    changeLoading((l) => (l = true));
-    api
-      .get(uri, null)
-      .then((response) => ensurePrettyData(response))
-      .then((data) => setData(data))
-      .catch((er) => setErrors([er]))
-      .finally(() => {
-        changeLoading((l) => (l = false));
-      });
+    try {
+      const data = await api.get(uri, null);
+      setData(ensurePrettyData(data));
+    } catch (ex) {
+      setErrors([ex]);
+    } finally {
+      changeLoading((l) => (l = false));
+    }
   };
 
   const handleShow = () => setModalOpen(true);
