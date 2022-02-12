@@ -37,7 +37,7 @@ const LiveInterview = () => {
     socket = io(config.LIVE_INTERVIEW_SERVICE);
     socket.emit("connection", { interviewId }, () => {});
     socket.emit("interviewStart", { interviewId }, () => {});
-    updateInterviewStatus('In progress');
+    updateInterviewStatus("In progress");
     socket.on(
       "recievedAnwer",
       (answers) => {
@@ -45,6 +45,11 @@ const LiveInterview = () => {
       },
       []
     );
+    socket.on("interviewEnded", () => {
+      alert("Interview ended");
+      window.location.href = "interviews";
+      updateInterviewStatus('Completed')
+    });
     return () => {
       socket.off();
     };
@@ -93,9 +98,10 @@ const LiveInterview = () => {
   };
 
   const endInterview = () => {
-    updateInterviewStatus('Completed')
-    window.location.href = 'interviews'
-  }
+    updateInterviewStatus("Completed");
+    socket.emit("endInterview", { interviewId }, () => {});
+    window.location.href = "interviews";
+  };
 
   return user.role !== ROLES.INTERVIEWER ? (
     <div className="container mt-5">
@@ -158,7 +164,7 @@ const LiveInterview = () => {
             </div>
           </div>
           <button
-          onClick={endInterview}
+            onClick={endInterview}
             style={{
               float: "right",
               marginTop: "15px",

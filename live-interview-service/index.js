@@ -23,6 +23,13 @@ io.on("connection", (socket) => {
     callback();
   });
 
+  socket.on("endInterview", ({ interviewId }, callback) => {
+    socket.broadcast.to(interviewId).emit("interviewEnded", null);
+    socket.join(interviewId);
+
+    callback();
+  });
+
   socket.on("answerUpdate", ({ answers, interviewId }, callback) => {
     socket.broadcast.to(interviewId).emit("recievedAnwer", answers);
     socket.join(interviewId);
