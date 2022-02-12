@@ -50,11 +50,16 @@ const LiveInterview = () => {
   }, []);
 
   const checkAuth = (interview = null) => {
-    if(interview === null) return
+    if (interview === null) return;
     const email = user.user.profileObj.email;
     const isAuthorized =
       email == config.INTERVIEWER || email == interview.interview.candidate;
-    // window.location.href = 'interviews'
+    if (!isAuthorized) {
+      alert(
+        "You are trying to access another candidate's interview. Marked as malicious activity"
+      );
+      window.location.href = "interviews";
+    }
   };
 
   const answerUpdate = () => {
