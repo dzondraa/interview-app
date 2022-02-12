@@ -7,10 +7,12 @@ import useToken from "./hooks/useToken";
 import CandidatesPage from "./pages/Candidates/CandidatesPage";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import LiveInterview from "./pages/LiveInterview/LiveInterview";
-
+import RequireAuth from "./hooks/requireAuth";
 
 function App(props) {
   const tokenService = useToken();
+  const user = tokenService.getLoggedInUser();
+  console.log(user, "USER");
 
   if (!tokenService.getToken()) {
     return <LoginPage setToken={tokenService.setToken} />;
@@ -32,7 +34,14 @@ function App(props) {
             <Route path="/areas" element={<Areas />} />
             <Route path="/candidates" element={<CandidatesPage />} />
             <Route path="/interviews" element={<InterviewPage />} />
-            <Route path="/live" element={<LiveInterview />} />
+            <Route
+              path="/live"
+              element={
+                <RequireAuth>
+                  <LiveInterview />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </Router>
       </div>

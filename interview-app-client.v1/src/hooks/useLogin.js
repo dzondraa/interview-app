@@ -3,6 +3,7 @@ import validator from "validator";
 import { Alert } from "react-bootstrap";
 import ApiFactory from "../services/Service";
 import useToken from "../hooks/useToken";
+import config from "../config/config";
 
 export default function useLogin() {
   const [email, setEmail] = useState("");
@@ -12,8 +13,7 @@ export default function useLogin() {
   const { token, setToken } = useToken();
 
   useEffect(() => {
-    if(token) redirect()
-    
+    if (token) redirect();
   });
 
   const handleSubmit = async () => {
@@ -53,14 +53,21 @@ export default function useLogin() {
   const validateFormData = () => {
     var errors = [];
     !validator.isEmail(email) && errors.push("Not a valid email");
-    !validator.isStrongPassword(password) && errors.push("Please enter a strong password");
+    !validator.isStrongPassword(password) &&
+      errors.push("Please enter a strong password");
     return errors;
   };
 
   const handleGoogleLogin = (payload) => {
-    if(payload.tokenId) setToken(payload.tokenId)
-    else alert("Something went wrong with Google auth!")
-  } 
+    if (payload.tokenId) {
+      localStorage.setItem("user", JSON.stringify(payload));
+      localStorage.setItem(
+        "role",
+        payload.Iu.yv == config.ADMIN ? "interviewer" : "candidate"
+      );
+      setToken(payload.tokenId);
+    } else alert("Something went wrong with Google auth!");
+  };
 
   const redirect = () => {
     window.location.href = "interviews";
@@ -71,6 +78,6 @@ export default function useLogin() {
     errors,
     setEmail,
     setPassword,
-    handleGoogleLogin
+    handleGoogleLogin,
   };
 }
