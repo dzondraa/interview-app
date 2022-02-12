@@ -17,37 +17,21 @@ const io = require("socket.io")(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("Interview started!");
-
   socket.on("interviewStart", ({ interviewId }, callback) => {
-    console.log("InterviewID: " + interviewId);
-
-    // if (error) return callback(error);
-
-    // socket.emit("message", {
-    //   user: 'admin',
-    //   text: `${user.name}, welcome to the room ${user.room}`,
-    // });
-    // socket.broadcast
-    //   .to(user.room)
-    //   .emit("message", { user: "admin", text: `${user.name}, has joined!` });
-    // socket.join(user.room);
+    socket.join(interviewId);
 
     callback();
   });
 
-  socket.on("answerUpdate", ({ answers }, callback) => {
-    console.log(answers)
+  socket.on("answerUpdate", ({ answers, interviewId }, callback) => {
+    socket.broadcast.to(interviewId).emit("recievedAnwer", answers);
+    socket.join(interviewId);
 
-    callback({type:'Info', message:'Answer saved!'})
+    callback({ type: "Info", message: "Answer saved!" });
   });
 
   socket.on("disconnect", () => {
     console.log("Candidate disconnected from the interview!");
-    // const user = removeUser(socket.id)
-
-    // if(user) {
-    // io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left!`})
   });
 });
 

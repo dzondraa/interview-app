@@ -7,10 +7,11 @@ import useToken from "./hooks/useToken";
 import CandidatesPage from "./pages/Candidates/CandidatesPage";
 import InterviewPage from "./pages/Interview/InterviewPage";
 import LiveInterview from "./pages/LiveInterview/LiveInterview";
-
+import RequireAuth from "./hooks/requireAuth";
 
 function App(props) {
   const tokenService = useToken();
+  const user = tokenService.getLoggedInUser();
 
   if (!tokenService.getToken()) {
     return <LoginPage setToken={tokenService.setToken} />;
@@ -21,18 +22,61 @@ function App(props) {
       <div className="container-fluid">
         <Router>
           <Routes>
-            <Route exact path="/" element={<Questions />} />
+            <Route
+              exact
+              path="/"
+              element={
+                <RequireAuth>
+                  <InterviewPage />
+                </RequireAuth>
+              }
+            />
             <Route
               path="/login"
               setToken={tokenService.setToken}
               element={<LoginPage />}
             />
             <Route path="/questions" element={<Questions />} />
-            <Route path="/reviewed" element={<ReviewedCVs />} />
-            <Route path="/areas" element={<Areas />} />
-            <Route path="/candidates" element={<CandidatesPage />} />
-            <Route path="/interviews" element={<InterviewPage />} />
-            <Route path="/live" element={<LiveInterview />} />
+            <Route
+              path="/reviewed"
+              element={
+                <RequireAuth>
+                  <ReviewedCVs />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/areas"
+              element={
+                <RequireAuth>
+                  <Areas />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/candidates"
+              element={
+                <RequireAuth>
+                  <CandidatesPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/interviews"
+              element={
+                <RequireAuth>
+                  <InterviewPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/live"
+              element={
+                <RequireAuth>
+                  <LiveInterview />
+                </RequireAuth>
+              }
+            />
           </Routes>
         </Router>
       </div>

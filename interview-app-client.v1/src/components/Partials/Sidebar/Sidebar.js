@@ -3,33 +3,21 @@ import { Link } from "react-router-dom";
 // get our fontawesome imports
 import { faFolderPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import config from "../../../config/config";
+import useToken from "../../../hooks/useToken";
 
 const Sidebar = () => {
-
+  const tokenService = useToken();
   const logout = () => {
     localStorage.clear();
-    window.location.href = '/'
-  }
+    window.location.href = "/";
+  };
 
-  const navigation = [
-    // { name: "Build CV", href: "#" },
-    {
-      name: "Reviewed CVs",
-      href: "/reviewed",
-    },
-    {
-      name: "Technical areas",
-      href: "/areas",
-    },
-    {
-      name: "Candidates",
-      href: "/candidates",
-    },
-    {
-      name: "Interviews",
-      href: "/interviews",
-    },
-  ];
+  const userRole = tokenService.getLoggedInUser().role;
+  console.log(userRole, "ROLE");
+  const navigation = config.navigation.filter((item) =>
+    config.routerProtection[userRole].includes(item.href)
+  );
   return (
     <div className="col-lg-2 sidebar-container">
       <ul
@@ -56,9 +44,13 @@ const Sidebar = () => {
 
         {navigation.map((navigationElement, index) => {
           return (
-            <Link style={{
-              textDecoration: 'none'
-            }} key={index} to={navigationElement.href}>
+            <Link
+              style={{
+                textDecoration: "none",
+              }}
+              key={index}
+              to={"/" + navigationElement.href}
+            >
               <li className="nav-item active my-link">
                 <p className="nav-link" href="#">
                   <i className="fas fa-fw fa-tachometer-alt"></i>

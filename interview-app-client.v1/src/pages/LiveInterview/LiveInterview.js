@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import ApiFactory from "../../services/Service";
+import useToken from "../../hooks/useToken";
+import ROLES from "../../config/roles";
+import config from "../../config/config";
+import "./LiveInterview.css";
 
 let socket;
 
 const LiveInterview = () => {
+  const interviewId = window.location.search.split("=")[1];
+  const api = ApiFactory.getResourceApiInstance();
+  const tokenService = useToken();
+  const user = tokenService.getLoggedInUser();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [answer, setAnswer] = useState("");
   const [info, setInfo] = useState(null);
-  const interviewId = window.location.search.split("=")[1];
-  const api = ApiFactory.getResourceApiInstance();
 
-  const ENDPOINT = "http://localhost:5000";
   useEffect(() => {
     api
       .get("interview", interviewId)
       .then((r) => {
+        checkAuth(r[0]);
         setQuestions((q) => (q = r[0].questions));
         setCurrentQuestion(0);
         setAnswers((a) => (a = r[0].questions));
@@ -25,35 +31,44 @@ const LiveInterview = () => {
       .catch((er) => {
         console.log(er);
       });
+    checkAuth();
 
-    socket = io(ENDPOINT);
-    socket.emit("connection", { interview: interviewId }, () => {});
-    socket.emit("interviewStart", { interviewId: interviewId }, () => {});
-
+    socket = io(config.LIVE_INTERVIEW_SERVICE);
+    socket.emit("connection", { interviewId }, () => {});
+    socket.emit("interviewStart", { interviewId }, () => {});
+    socket.on(
+      "recievedAnwer",
+      (answers) => {
+        setAnswers(answers);
+      },
+      []
+    );
     // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
     };
   }, []);
 
-  useEffect(() => {
-    socket.on(
-      "saveAnswers",
-      (message) => {
-        console.log(message);
-      },
-      []
-    );
-  });
+  const checkAuth = (interview = null) => {
+    if (interview === null) return;
+    const email = user.user.profileObj.email;
+    const isAuthorized =
+      email == config.INTERVIEWER || email == interview.interview.candidate;
+    if (!isAuthorized) {
+      alert(
+        "You are trying to access another candidate's interview. Marked as malicious activity"
+      );
+      window.location.href = "interviews";
+    }
+  };
 
   const answerUpdate = () => {
     // const answer = document.getElementById("answer").value;
     var tempAnswers = [...answers];
     tempAnswers = answers;
     tempAnswers[currentQuestion].answer = answer;
-    console.log(tempAnswers);
     setAnswers((a) => (a = tempAnswers));
-    socket.emit("answerUpdate", { answers }, (res) => {
+    socket.emit("answerUpdate", { answers, interviewId }, (res) => {
       handleInfo(res);
     });
   };
@@ -72,7 +87,7 @@ const LiveInterview = () => {
     }, 3000);
   };
 
-  return (
+  return user.role !== ROLES.INTERVIEWER ? (
     <div className="container mt-5">
       <div className="d-flex justify-content-center row">
         <div className="col-md-10 col-lg-10">
@@ -135,7 +150,7 @@ const LiveInterview = () => {
           <button
             style={{
               float: "right",
-              marginTop: '15px'
+              marginTop: "15px",
             }}
             type="button"
             className="btn btn-outline-success btn-lg"
@@ -143,6 +158,32 @@ const LiveInterview = () => {
             End interview
           </button>
         </div>
+      </div>
+    </div>
+  ) : (
+    <div
+      style={{
+        marginTop: "50px",
+      }}
+      className="container"
+    >
+      <div className="list-group">
+        {answers.map((question, key) => {
+          return (
+            <div key={key}>
+              <a href="#" className="list-group-item list-group-item-action">
+                <b>{question.description}</b>
+              </a>
+              <a href="#" className="list-group-item list-group-item-action">
+                {question.answer ? (
+                  question.answer
+                ) : (
+                  <span className="blink_me">Waiting on candidate...</span>
+                )}
+              </a>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
