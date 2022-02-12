@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import ApiFactory from "../../services/Service";
 import useToken from "../../hooks/useToken";
 import ROLES from "../../config/roles";
+import "./LiveInterview.css";
 
 let socket;
 
@@ -33,7 +34,6 @@ const LiveInterview = () => {
     socket = io(ENDPOINT);
     socket.emit("connection", { interview: interviewId }, () => {});
     socket.emit("interviewStart", { interviewId: interviewId }, () => {});
-
     // TODO -> Update status of interview to 'Running'
     return () => {
       socket.off();
@@ -43,11 +43,15 @@ const LiveInterview = () => {
   useEffect(() => {
     socket.on(
       "saveAnswers",
-      (message) => {
-        console.log(message);
+      (answers) => {
+        setAnswers(answers);
       },
       []
     );
+
+    socket.on("answerRecieved", (answers) => {
+      setAnswers((a) => (a = answers));
+    });
   });
 
   const answerUpdate = () => {
@@ -55,7 +59,6 @@ const LiveInterview = () => {
     var tempAnswers = [...answers];
     tempAnswers = answers;
     tempAnswers[currentQuestion].answer = answer;
-    console.log(tempAnswers);
     setAnswers((a) => (a = tempAnswers));
     socket.emit("answerUpdate", { answers }, (res) => {
       handleInfo(res);
@@ -159,22 +162,18 @@ const LiveInterview = () => {
       <div className="list-group">
         {answers.map((question, key) => {
           return (
-            <>
-              <a
-                href="#"
-                key={key}
-                className="list-group-item list-group-item-action"
-              >
+            <div key={key}>
+              <a href="#" className="list-group-item list-group-item-action">
                 {question.description}
               </a>
-              <a
-                href="#"
-                key={key}
-                className="list-group-item list-group-item-action"
-              >
-                {question.answer ? question.answer : "Waiting on candidate..."}
+              <a href="#" className="list-group-item list-group-item-action">
+                {question.answer ? (
+                  question.answer
+                ) : (
+                  <span className="blink_me">Waiting on candidate...</span>
+                )}
               </a>
-            </>
+            </div>
           );
         })}
       </div>
