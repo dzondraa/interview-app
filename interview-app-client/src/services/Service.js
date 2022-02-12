@@ -79,9 +79,15 @@ class ApiFactory {
 
     const res = abortSignal
       ? await this.abortableRequest(url, method, null, abortSignal).then(
-          (res) => res.json()
+          (res) => {
+            this.handleStatusCode(res.status);
+            return res.json();
+          }
         )
-      : await this.request(url, method).then((res) => res.json());
+      : await this.request(url, method).then((res) => {
+          this.handleStatusCode(res.status);
+          return res.json();
+        });
     return res;
   }
 
@@ -89,6 +95,16 @@ class ApiFactory {
     const method = "POST";
     const res = await this.request(url, method, data).then((res) => res.json());
     return res;
+  }
+
+  handleStatusCode(statusCode) {
+    if (statusCode == 401) {
+      localStorage.clear();
+      window.location.href = "login";
+    }
+    if (statusCode == 500) {
+      throw { message: "Server currently unavailable." };
+    }
   }
 }
 
