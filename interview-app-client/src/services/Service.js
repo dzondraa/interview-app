@@ -105,6 +105,9 @@ class ApiFactory {
     if (statusCode == 500) {
       throw { message: "Server currently unavailable." };
     }
+    if (statusCode == 404) {
+      throw { message: "Resource not found" };
+    }
   }
 }
 
