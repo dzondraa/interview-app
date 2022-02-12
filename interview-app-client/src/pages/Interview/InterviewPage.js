@@ -28,6 +28,7 @@ const InterviewPage = () => {
 
   const getCandidateData = async () => {
     try {
+      changeLoading(true);
       const data = await api.get(
         `interview?candidate=${user.user.profileObj.email}`,
         null
@@ -40,6 +41,7 @@ const InterviewPage = () => {
     }
   };
   const getData = async () => {
+    changeLoading(true);
     const uri = buildUri();
     try {
       const data = await api.get(uri, null);
