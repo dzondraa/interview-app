@@ -1,11 +1,40 @@
 import { useState } from "react";
+import { Button } from "react-bootstrap";
+import ApiFactory from "../../services/Service";
 const NewInterviewForm = ({ questions }) => {
   const [areaInput, setAreaInput] = useState({
     candidate: null,
     questions: null,
     date: null,
+    time: null,
   });
-  console.log(areaInput);
+  const prepareDataForRequest = () => {
+    var questioSelection = Array.from(areaInput.questions);
+    var questionsList = [];
+    questioSelection.forEach((q) => {
+      questionsList.push(q.value);
+    });
+    var newInterviewData = {
+      // TODO -> Suggestions for user (serach by email)
+      candidateId: areaInput.candidate,
+      questions: questionsList,
+      date: `${areaInput.date}T${areaInput.time}:40.233+00:00`,
+    };
+    console.log(newInterviewData);
+    return newInterviewData;
+  };
+
+  const createNewInterview = async () => {
+    try {
+      await ApiFactory.getResourceApiInstance().post(
+        "interview",
+        prepareDataForRequest()
+      );
+    } catch (ex) {
+      console.error(ex);
+    }
+  };
+
   return (
     <form>
       <div className="form-group">
@@ -59,7 +88,7 @@ const NewInterviewForm = ({ questions }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="time">Example textarea</label>
+        <label htmlFor="time">Time</label>
         <input
           onChange={(e) =>
             setAreaInput(
@@ -72,6 +101,9 @@ const NewInterviewForm = ({ questions }) => {
           placeholder="Time"
         />
       </div>
+      <Button variant="primary" onClick={createNewInterview}>
+        Create New Interview
+      </Button>
     </form>
   );
 };
