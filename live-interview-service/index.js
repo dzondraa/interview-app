@@ -5,9 +5,6 @@ var cors = require("cors");
 const PORT = process.env.PORT || 5000;
 require("./messagingService");
 
-// Connect to message broker
-var answersGlobal = [];
-
 var app = express();
 app.use(cors());
 app.use(router);
@@ -27,13 +24,13 @@ io.on("connection", (socket) => {
     callback();
   });
 
-  socket.on("endInterview", ({ interviewId }, callback) => {
+  socket.on("endInterview", ({ answers, interviewId }, callback) => {
     socket.broadcast.to(interviewId).emit("interviewEnded", null);
     socket.join(interviewId);
     notifyResourceService(
       JSON.stringify({
         interviewId: interviewId,
-        answers: answersGlobal,
+        answers: answers,
       })
     );
     callback();

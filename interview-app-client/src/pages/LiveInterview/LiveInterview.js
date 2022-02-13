@@ -99,7 +99,7 @@ const LiveInterview = () => {
 
   const endInterview = () => {
     updateInterviewStatus("Completed");
-    socket.emit("endInterview", { interviewId }, () => {});
+    socket.emit("endInterview", { answers, interviewId }, () => {});
     window.location.href = "interviews";
   };
 
