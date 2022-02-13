@@ -47,18 +47,18 @@ const Questions = () => {
 
           {!documents && !isSearching ? (
             <div>
+              <img
+                src={whatYouLookingForImg}
+                alt="what you looking for"
+                height="500px"
+              />{" "}
               <h2
                 style={{
                   marginTop: "20px",
                 }}
               >
-                Let us know.. <br></br> What are you looking for?
+                Let us know what are you looking for?
               </h2>
-              <img
-                src={whatYouLookingForImg}
-                alt="what you looking for"
-                height="500px"
-              />
             </div>
           ) : null}
         </div>
