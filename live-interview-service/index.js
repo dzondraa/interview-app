@@ -3,6 +3,28 @@ const http = require("http");
 const router = require("./router");
 var cors = require("cors");
 const PORT = process.env.PORT || 5000;
+const amqp = require("amqplib/callback_api");
+
+// Connect to message broker
+amqp.connect("amqp://localhost", function (error0, connection) {
+  if (error0) {
+    throw error0;
+  }
+  connection.createChannel(function (error1, channel) {
+    if (error1) {
+      throw error1;
+    }
+    var queue = "interview";
+    var msg = { interviewData: { q1: "asdasd" } };
+
+    // channel.assertQueue(queue, {
+    //   durable: false
+    // });
+
+    channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
+    console.log(" [x] Sent %s", msg);
+  });
+});
 
 var app = express();
 app.use(cors());
