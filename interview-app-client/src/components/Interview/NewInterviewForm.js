@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import ApiFactory from "../../services/Service";
+import validator from "validator";
+import ErrorBox from "../common/ErrorBox/ErrorBox";
 const NewInterviewForm = ({ questions }) => {
   const [areaInput, setAreaInput] = useState({
-    candidate: null,
-    questions: null,
-    date: null,
-    time: null,
+    candidate: "",
+    questions: "",
+    date: "",
+    time: "",
   });
+  const [errors, setErrors] = useState([]);
   const prepareDataForRequest = () => {
     var questioSelection = Array.from(areaInput.questions);
     var questionsList = [];
@@ -23,16 +26,31 @@ const NewInterviewForm = ({ questions }) => {
     console.log(newInterviewData);
     return newInterviewData;
   };
-
   const createNewInterview = async () => {
-    try {
-      await ApiFactory.getResourceApiInstance().post(
-        "interview",
-        prepareDataForRequest()
-      );
-    } catch (ex) {
-      console.error(ex);
+    if (validate()) {
+      try {
+        await ApiFactory.getResourceApiInstance().post(
+          "interview",
+          prepareDataForRequest()
+        );
+      } catch (ex) {
+        console.error(ex);
+      }
     }
+  };
+
+  const validate = () => {
+    var errors = [];
+    !validator.isEmail(areaInput.candidate) &&
+      errors.push({ message: "Not a valid user email" });
+    validator.isEmpty(areaInput.time) &&
+      errors.push({ message: "Time is required" });
+    validator.isEmpty(areaInput.date) &&
+      errors.push({ message: "Date is required" });
+    areaInput.questions.length == 0 &&
+      errors.push({ message: "Select at leaset 1 question" });
+    setErrors((e) => (e = errors));
+    return errors.length == 0;
   };
 
   return (
@@ -104,6 +122,7 @@ const NewInterviewForm = ({ questions }) => {
       <Button variant="primary" onClick={createNewInterview}>
         Create New Interview
       </Button>
+      {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
     </form>
   );
 };
