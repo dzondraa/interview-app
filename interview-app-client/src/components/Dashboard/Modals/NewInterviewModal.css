@@ -1,6 +1,6 @@
 .modal-content, .modal-dialog {
-    width: 900px !important;
-    max-width: 900px !important;
+    width: 1000px !important;
+    max-width: 1000px !important;
 }
 
 .modal-body {
@@ -9,4 +9,8 @@
 
 .form-container {
     margin-left: 20px;
+}
+
+option {
+    cursor: pointer;
 }
