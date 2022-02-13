@@ -44,6 +44,13 @@ namespace API.Controllers
         {
         }
 
+        [HttpPatch("{id}")]
+        public async Task Patch(Guid id,
+            [FromBody] CloudStorage.Entities.Interview request,
+            [FromServices] InterviewRepository repository
+            )
+        => await repository.Patch(id, request);
+
         // DELETE api/<Interview>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

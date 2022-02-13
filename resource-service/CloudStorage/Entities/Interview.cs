@@ -18,6 +18,11 @@ namespace CloudStorage.Entities
         public IEnumerable<Guid> Questions { get; set; }
         public string Feedback { get; set; }
 
+        public Interview()
+        {
+
+        }
+
         public Interview(CreateInterviewRequest newInterviewReq)
         {
             Candidate = newInterviewReq.CandidateId;

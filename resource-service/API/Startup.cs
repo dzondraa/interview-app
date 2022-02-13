@@ -1,4 +1,5 @@
 using API.Core.Middleware;
+using API.Messaging;
 using BusinessLayer;
 using BusinessLayer.Servces;
 using CloudStorage;
@@ -57,6 +58,10 @@ namespace API
             services.AddTransient<InterviewRepository>();
             services.AddTransient<CandidateRepository>();
             services.AddTransient<InterviewQuestionRepository>();
+            services.AddHostedService<InterviewRecieverService>();
+            services.AddTransient<InterviewHistoryRepository>();
+
+
 
 
 
@@ -109,7 +114,8 @@ namespace API
             app.UseRouting();
 
             app.UseCors();
-            
+
+            app.UseMiddleware<ExceptionHandler>();
             app.UseMiddleware<AuthMiddlware>();
 
             app.UseAuthentication();

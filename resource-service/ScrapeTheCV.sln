@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinForm", "WinForm\WinForm.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{8E880E4C-7A61-4531-8CFA-4B8F6E068EA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayerTests2", "BusinessLayerTests2\BusinessLayerTests2.csproj", "{4FF47FFC-FF6C-44AD-9B8E-60BED10F4115}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudStorage", "CloudStorage\CloudStorage.csproj", "{A26896CC-C481-4923-AE6A-0958DF6503A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudStorage", "CloudStorage\CloudStorage.csproj", "{A26896CC-C481-4923-AE6A-0958DF6503A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{8E880E4C-7A61-4531-8CFA-4B8F6E068EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E880E4C-7A61-4531-8CFA-4B8F6E068EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E880E4C-7A61-4531-8CFA-4B8F6E068EA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FF47FFC-FF6C-44AD-9B8E-60BED10F4115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FF47FFC-FF6C-44AD-9B8E-60BED10F4115}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FF47FFC-FF6C-44AD-9B8E-60BED10F4115}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FF47FFC-FF6C-44AD-9B8E-60BED10F4115}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A26896CC-C481-4923-AE6A-0958DF6503A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A26896CC-C481-4923-AE6A-0958DF6503A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A26896CC-C481-4923-AE6A-0958DF6503A9}.Release|Any CPU.ActiveCfg = Release|Any CPU

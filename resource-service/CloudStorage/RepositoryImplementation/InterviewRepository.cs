@@ -64,6 +64,14 @@ namespace CloudStorage.RepositoryImplementation
             return result;
         }
 
+        public async Task Patch(Guid id, Interview interviewRequest)
+        {
+            var interviews = mongoDB.GetClient().GetCollection<Interview>(_collectionName);
+            var filter = Builders<Interview>.Filter.Eq(e => e.Id, id);
+            var update = Builders<Interview>.Update.Set(i => i.Status, interviewRequest.Status);
+            await interviews.UpdateOneAsync(filter, update);
+        }
+
     }
 
     public class InterviewCandidateResponse

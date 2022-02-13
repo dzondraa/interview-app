@@ -17,9 +17,9 @@ namespace API.Controllers
     {
         //GET: api/<Question>
         [HttpGet]
-        public IEnumerable<IMongoEntity> Get([FromServices] QuestionRepository repository)
+        public IEnumerable<IMongoEntity> Get([FromServices] QuestionRepository repository, [FromQuery] IEnumerable<Guid> area)
         {
-            return repository.GetAll();
+            return area == null ? repository.GetAll() : repository.GetAllByAreas(area);
         }
 
         //// GET api/<Question>/5

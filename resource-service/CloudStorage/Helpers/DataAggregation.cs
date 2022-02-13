@@ -36,13 +36,11 @@ namespace CloudStorage.Helpers
                 if (filter.Status != null && record.Status != filter.Status)
                 {
                     valid = false;
-                    break;
                 }
 
                 if (filter.Candidate != null && record.Email != filter.Candidate)
                 {
                     valid = false;
-                    break;
                 }
                 if (valid) response.Add(record);
             }

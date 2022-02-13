@@ -22,5 +22,12 @@ namespace CloudStorage.RepositoryImplementation
                 .GetCollection<Question>(_collectionName)
                 .Find(question => question.Name == name)
                 .FirstOrDefault();
+
+        public IEnumerable<Question> GetAllByAreas(IEnumerable<Guid> area)
+        {
+            var questions = this.mongoDB.GetClient().GetCollection<Question>(_collectionName);
+            var filter = Builders<Question>.Filter.AnyIn(q => q.Areas, area);
+            return questions.Find(filter).ToList();
+        }
     }
 }

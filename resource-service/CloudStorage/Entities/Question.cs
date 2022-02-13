@@ -16,6 +16,11 @@ namespace CloudStorage.Entities
         public string Description { get; set; }
         public IEnumerable<Guid> Areas { get; set; }
 
+        public Question()
+        {
+
+        }
+
         public Question(NewQuestionRequest request) 
         {
             Name = request.Name;
