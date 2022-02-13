@@ -21,3 +21,11 @@
 - Unhandled excaptions 
 - Traces
 <img src="https://vectorlogoseek.com/wp-content/uploads/2020/02/sentry-io-vector-logo.png" height="50">
+
+## Hoe to run
+- Please use `devinit.sh` script to start all the services
+- Client application
+- Live interview service (Node.js & Socket.io)
+- Resource service (ASP.NET API including Business logic)
+- RabbitMQ node (Message broker)
+<img src="https://raw.githubusercontent.com/aKumoSolutions/Bash-Scripting/master/img/bash.jpg" height="30">
