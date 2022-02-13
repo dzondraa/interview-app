@@ -9,7 +9,7 @@ import {
 import "./Area.css";
 import AddNewArea from "./Partial/AddNewArea";
 
-const Area = ({ area, areas, checkChange }) => {
+const Area = ({ area, checkChange }) => {
   const buildAreasDOM = (areas) => {
     return areas.map((area, key) => {
       return (

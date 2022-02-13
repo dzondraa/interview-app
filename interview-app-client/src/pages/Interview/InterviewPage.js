@@ -9,6 +9,7 @@ import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import FilterTags from "../../components/Dashboard/Tags/FilterTags";
 import InterviewModal from "../../components/Dashboard/Modals/InterviewModal";
 import useToken from "../../hooks/useToken";
+import NewInterviewModal from "../../components/Dashboard/Modals/NewInterviewModal";
 
 const InterviewPage = () => {
   const api = Api.getResourceApiInstance();
@@ -20,6 +21,7 @@ const InterviewPage = () => {
   const [tags, setFilterTags] = useState([]);
   const [status, setStatus] = useState("0");
   const [modalOpen, setModalOpen] = useState(false);
+  const [newInterviewModalOpen, setNewInterviewModalOpen] = useState(false);
   const [selectedInterview, seSelectedInterview] = useState(null);
 
   useEffect(() => {
@@ -55,6 +57,9 @@ const InterviewPage = () => {
 
   const handleShow = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
+  const handleShowNewInterview = () => setNewInterviewModalOpen(true);
+  const handleCloseNewInterview = () => setNewInterviewModalOpen(true);
+
   const buildUri = () => {
     var uri = "interview?";
     if (tags.length > 0) {
@@ -149,6 +154,15 @@ const InterviewPage = () => {
                   <option>Completed</option>
                 </select>
               </div>
+              <div className="col-lg-3">
+                <button
+                  onClick={handleShowNewInterview}
+                  type="button"
+                  className="btn btn-outline-primary"
+                >
+                  New interview
+                </button>
+              </div>
             </div>
             {modalOpen && (
               <InterviewModal
@@ -170,6 +184,11 @@ const InterviewPage = () => {
                 }}
               ></DynamicTable>
             )}
+            <NewInterviewModal
+              modalOpen={newInterviewModalOpen}
+              handleShow={handleShowNewInterview}
+              handleClose={handleCloseNewInterview}
+            />
           </div>
         </div>
       </div>

@@ -1,0 +1,12 @@
+.modal-content, .modal-dialog {
+    width: 900px !important;
+    max-width: 900px !important;
+}
+
+.modal-body {
+    display: flex !important;
+}
+
+.form-container {
+    margin-left: 20px;
+}
