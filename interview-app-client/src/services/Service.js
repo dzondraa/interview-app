@@ -93,7 +93,7 @@ class ApiFactory {
 
   async post(url, data) {
     const method = "POST";
-    const res = await this.request(url, method, data).then((res) => res.json());
+    const res = await this.request(url, method, data);
     return res;
   }
 

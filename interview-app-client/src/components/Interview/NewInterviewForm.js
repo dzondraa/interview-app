@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import ApiFactory from "../../services/Service";
 import validator from "validator";
 import ErrorBox from "../common/ErrorBox/ErrorBox";
+import SuccessBox from "../common/SuccessBox/SuccessBox";
 const NewInterviewForm = ({ questions }) => {
   const [areaInput, setAreaInput] = useState({
     candidate: "",
@@ -11,6 +12,7 @@ const NewInterviewForm = ({ questions }) => {
     time: "",
   });
   const [errors, setErrors] = useState([]);
+  const [message, setMessage] = useState(null);
   const prepareDataForRequest = () => {
     var questioSelection = Array.from(areaInput.questions);
     var questionsList = [];
@@ -29,10 +31,12 @@ const NewInterviewForm = ({ questions }) => {
   const createNewInterview = async () => {
     if (validate()) {
       try {
-        await ApiFactory.getResourceApiInstance().post(
+        const res = await ApiFactory.getResourceApiInstance().post(
           "interview",
           prepareDataForRequest()
         );
+        if (res.status == 200)
+          setMessage({ message: "Sucessfully scheduled new itreview" });
       } catch (ex) {
         console.error(ex);
       }
@@ -123,6 +127,7 @@ const NewInterviewForm = ({ questions }) => {
         Create New Interview
       </Button>
       {errors.length > 0 && <ErrorBox errors={errors}></ErrorBox>}
+      {message !== null && <SuccessBox messages={[message]}></SuccessBox>}
     </form>
   );
 };

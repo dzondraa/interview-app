@@ -26,14 +26,22 @@ const InterviewModal = ({
         <Modal.Title>Interview details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <b>Date</b> {new Date(interviewDetails.interview.date).toDateString()}
-        <br />
-        <b>Time</b> {new Date(interviewDetails.interview.date).toTimeString()}
-        <br></br>
-        <b>Questions:</b>
-        {interviewDetails.questions.map((question, key) => {
-          return <p key={key}>{question.description}</p>;
-        })}
+        <div className="card col-lg-12">
+          <div className="card-body">
+            <b>Date</b>
+            <p>{new Date(interviewDetails.interview.date).toDateString()}</p>
+          </div>
+          <div className="card-body">
+            <b>Time</b>
+            <p>{new Date(interviewDetails.interview.date).toTimeString()}</p>
+          </div>
+          <div className="card-body">
+            <b>Questions:</b>
+            {interviewDetails.questions.map((question, key) => {
+              return <li key={key}>{question.description}</li>;
+            })}
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -42,7 +50,9 @@ const InterviewModal = ({
         {interviewDetails.interview.status == "Planned" ||
         interviewDetails.interview.status == "In progress" ? (
           <Button variant="primary" onClick={startInterview}>
-            {interviewDetails.interview.status == "Planned" ? 'Start interview' : 'Join interview'}
+            {interviewDetails.interview.status == "Planned"
+              ? "Start interview"
+              : "Join interview"}
           </Button>
         ) : null}
       </Modal.Footer>
