@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Area from "../../components/Areas/Area";
-import AddNewArea from "../../components/Areas/Partial/AddNewArea";
 import NewQuestionForm from "../../components/Areas/Partial/NewQuestionFrom";
 import ErrorBox from "../../components/common/ErrorBox/ErrorBox";
 import LoaderSpin from "../../components/common/Loaders/LoaderSpin";

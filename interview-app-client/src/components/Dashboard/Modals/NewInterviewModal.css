@@ -1,0 +1,16 @@
+.modal-content, .modal-dialog {
+    width: 1000px !important;
+    max-width: 1000px !important;
+}
+
+.modal-body {
+    display: flex !important;
+}
+
+.form-container {
+    margin-left: 20px;
+}
+
+option {
+    cursor: pointer;
+}
