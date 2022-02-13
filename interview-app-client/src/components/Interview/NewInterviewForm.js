@@ -1,9 +1,17 @@
+import { useState } from "react";
 const NewInterviewForm = ({ questions }) => {
+  const [areaInput, setAreaInput] = useState({
+    candidate: null,
+    questions: null,
+    date: null,
+  });
+  console.log(areaInput);
   return (
     <form>
       <div className="form-group">
         <label htmlFor="exampleFormControlInput1">Candidate</label>
         <input
+          onChange={(e) => setAreaInput({ candidate: e.target.value })}
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
@@ -29,6 +37,11 @@ const NewInterviewForm = ({ questions }) => {
       <div className="form-group">
         <label htmlFor="date">Date</label>
         <input
+          onChange={(e) =>
+            setAreaInput(
+              (value) => (value = { ...value, date: e.target.value })
+            )
+          }
           type="date"
           className="form-control"
           id="date"

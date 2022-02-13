@@ -49,10 +49,8 @@ const NewInterviewModal = ({ modalOpen, handleClose }) => {
     getAreas();
   }, []);
 
-  useEffect(() => {}, []);
-
   const createNewInterview = () => {
-    // chose candidates
+    // getFormData();
     // add list of questions
   };
   return (
