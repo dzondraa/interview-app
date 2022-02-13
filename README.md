@@ -2,6 +2,10 @@
 - Client application based on React and JavaScript
 - Backend business logic based on Node.js and Socket.io
 
+## System design map
+![image](https://user-images.githubusercontent.com/52199590/153779723-1efc7ac0-9c96-4136-9e57-c299617cd462.png)
+
+
 <img src="https://miro.medium.com/max/812/0*xAADmPJN52Yy6XJV.jpg" height="40"> <img src="https://image.pngaaa.com/930/2507930-middle.png" height="40">
 
 ## Auth
