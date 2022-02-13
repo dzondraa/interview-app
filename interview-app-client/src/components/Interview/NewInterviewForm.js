@@ -11,7 +11,11 @@ const NewInterviewForm = ({ questions }) => {
       <div className="form-group">
         <label htmlFor="exampleFormControlInput1">Candidate</label>
         <input
-          onChange={(e) => setAreaInput({ candidate: e.target.value })}
+          onChange={(e) =>
+            setAreaInput(
+              (value) => (value = { ...value, candidate: e.target.value })
+            )
+          }
           type="text"
           className="form-control"
           id="exampleFormControlInput1"
@@ -23,6 +27,12 @@ const NewInterviewForm = ({ questions }) => {
           Select questions for the
         </label>
         <select
+          onChange={(e) => {
+            setAreaInput(
+              (value) =>
+                (value = { ...value, questions: e.target.selectedOptions })
+            );
+          }}
           multiple
           className="form-control"
           id="exampleFormControlSelect2"
@@ -51,6 +61,11 @@ const NewInterviewForm = ({ questions }) => {
       <div className="form-group">
         <label htmlFor="time">Example textarea</label>
         <input
+          onChange={(e) =>
+            setAreaInput(
+              (value) => (value = { ...value, time: e.target.value })
+            )
+          }
           type="time"
           className="form-control"
           id="time"
