@@ -1,6 +1,7 @@
 # Interview management software solution
 - Client application based on React and JavaScript
-- Backend business logic based on Node.js and Socket.io
+- Resource service based on C# ASP.NET
+- Live interview service based on Node.js and Sockets.io (Web sockets mostly) 
 
 ## System design map
 ![image](https://user-images.githubusercontent.com/52199590/153779723-1efc7ac0-9c96-4136-9e57-c299617cd462.png)
