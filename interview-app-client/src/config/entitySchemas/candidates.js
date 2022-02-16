@@ -1,5 +1,5 @@
 const schema = {
-  properties: ["email", "fullName", "interview"],
+  properties: ["email", "fullName"],
 };
 
 export default schema;
