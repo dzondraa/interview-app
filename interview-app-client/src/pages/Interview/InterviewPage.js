@@ -10,6 +10,7 @@ import FilterTags from "../../components/Dashboard/Tags/FilterTags";
 import InterviewModal from "../../components/Dashboard/Modals/InterviewModal";
 import useToken from "../../hooks/useToken";
 import NewInterviewModal from "../../components/Dashboard/Modals/NewInterviewModal";
+import roles from "../../config/roles";
 
 const InterviewPage = () => {
   const api = Api.getResourceApiInstance();
@@ -25,27 +26,17 @@ const InterviewPage = () => {
   const [selectedInterview, seSelectedInterview] = useState(null);
 
   useEffect(() => {
-    user.role == "interviewer" ? getData(tags, status) : getCandidateData();
+    getData();
   }, [tags, status]);
 
-  const getCandidateData = async () => {
+  const getData = async () => {
     try {
       changeLoading(true);
-      const data = await api.get(
-        `interview?candidate=${user.user.profileObj.email}`,
-        null
-      );
-      setData(data);
-    } catch (ex) {
-      setErrors([ex]);
-    } finally {
-      changeLoading((l) => (l = false));
-    }
-  };
-  const getData = async () => {
-    changeLoading(true);
-    const uri = buildUri();
-    try {
+      var uri = buildUri();
+      uri +=
+        user.role === roles.CANDIDATE
+          ? `&candidate=${user.user.profileObj.email}`
+          : "";
       const data = await api.get(uri, null);
       setData(ensurePrettyData(data));
     } catch (ex) {
@@ -58,7 +49,7 @@ const InterviewPage = () => {
   const handleShow = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
   const handleShowNewInterview = () => setNewInterviewModalOpen(true);
-  const handleCloseNewInterview = () => setNewInterviewModalOpen(true);
+  const handleCloseNewInterview = () => setNewInterviewModalOpen(false);
 
   const buildUri = () => {
     var uri = "interview?";

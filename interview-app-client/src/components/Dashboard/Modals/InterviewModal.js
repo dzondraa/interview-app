@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import ApiFactory from "../../../services/Service";
 const InterviewModal = ({
   modalOpen,
-  handleShow,
   handleClose,
   selectedInterview,
 }) => {
