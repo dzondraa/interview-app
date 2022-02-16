@@ -23,14 +23,17 @@ const Areas = () => {
   };
 
   const deleteAreas = async () => {
-    await api.post("area/batchdelete", selectedAreas);
-    // TODO Avoid non-necessary GET call
-    const areas = await api.get("area");
-    setAreas((a) => (a = areas));
+    try {
+      await api.post("area/batchdelete", selectedAreas);
+      // TODO Avoid non-necessary GET call
+      const areas = await api.get("area");
+      setAreas((a) => (a = areas));
+    } catch (ex) {
+      console.error(ex);
+    }
   };
 
   useEffect(() => {
-    // TODO Cancel request if component unmounted
     const ac = new AbortController();
     api
       .get("area", null, ac.signal)
