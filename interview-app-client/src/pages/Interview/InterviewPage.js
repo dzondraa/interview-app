@@ -20,7 +20,7 @@ const InterviewPage = () => {
   const [errors, setErrors] = useState([]);
   const [isLoading, changeLoading] = useState(true);
   const [tags, setFilterTags] = useState([]);
-  const [status, setStatus] = useState("0");
+  const [status, setStatus] = useState("Planned");
   const [modalOpen, setModalOpen] = useState(false);
   const [newInterviewModalOpen, setNewInterviewModalOpen] = useState(false);
   const [selectedInterview, seSelectedInterview] = useState(null);
@@ -136,10 +136,10 @@ const InterviewPage = () => {
                   className="form-select form-select mb-3"
                   aria-label=".form-select-lg example"
                 >
-                  <option defaultValue value="0">
+                  <option value="0">
                     Filter by status
                   </option>
-                  <option>Planned</option>
+                  <option selected>Planned</option>
                   <option>Canceled</option>
                   <option>In progress</option>
                   <option>Completed</option>
