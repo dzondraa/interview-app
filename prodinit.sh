@@ -1,3 +1,5 @@
+npm --prefix "live-interview-service" run install
+npm --prefix "interview-app-client" run install
 npm --prefix "live-interview-service" run start&
 npm --prefix "interview-app-client" run start&
 cd interview-app-service
