@@ -58,7 +58,7 @@ const InterviewPage = () => {
   const handleShow = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
   const handleShowNewInterview = () => setNewInterviewModalOpen(true);
-  const handleCloseNewInterview = () => setNewInterviewModalOpen(true);
+  const handleCloseNewInterview = () => setNewInterviewModalOpen(false);
 
   const buildUri = () => {
     var uri = "interview?";
